@@ -192,7 +192,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" onclick="window.location='home-3.html'+'?eta='+getQueryVariable('eta')+'&premioallin=130';" data-dismiss="modal">AVANTI</button></div>
+                        <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" v-on:click = "onSelectPackage(130)" data-dismiss="modal">AVANTI</button></div>
                     </div>
                 </div>
             </div>
@@ -370,7 +370,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" onclick="window.location='home-3.html'+'?eta='+getQueryVariable('eta')+'&premioallin=190';" data-dismiss="modal">AVANTI</button></div>
+                    <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" v-on:click = "onSelectPackage(190)" data-dismiss="modal">AVANTI</button></div>
                 </div>
             </div>
         </div>
@@ -548,7 +548,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" onclick="window.location='home-3.html'+'?eta='+getQueryVariable('eta')+'&premioallin=300';" data-dismiss="modal">AVANTI</button></div>
+                    <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" v-on:click = "onSelectPackage(300)" data-dismiss="modal">AVANTI</button></div>
                 </div>
             </div>
         </div>
@@ -557,7 +557,11 @@
 
 <script>
 export default {
-
+    methods: {
+        onSelectPackage: function (price) {
+            this.$emit('selectPackageHandler', price);
+        }
+    }
 }
 </script>
 

@@ -3,7 +3,7 @@
 @section('content')
 
 <div id="app">
-    <registersale/>
+    <registersale seller_id = "1"/>
 </div>
 
 @endsection

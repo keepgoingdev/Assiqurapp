@@ -6,8 +6,13 @@
 
 <!-- Name Field -->
 <div class="form-group">
-    {!! Form::label('name', 'Name:') !!}
-    <p>{!! $user->name !!}</p>
+    {!! Form::label('first_name', 'Nome:') !!}
+    <p>{!! $user->first_name !!}</p>
+</div>
+
+<div class="form-group">
+    {!! Form::label('last_name', 'Cognome:') !!}
+    <p>{!! $user->last_name !!}</p>
 </div>
 
 <!-- Email Field -->

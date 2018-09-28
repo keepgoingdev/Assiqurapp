@@ -22,6 +22,7 @@
     "dependencies": {
         "material-icons": "^0.2.3",
         "vue-form-wizard": "^0.8.4",
+        "vue-material": "^1.0.0-beta-10.2",
         "vue-number-input-spinner": "^2.0.5",
         "vue-stepper": "^1.3.2",
         "vue-tabs-component": "^1.5.0",

@@ -15,6 +15,11 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import VueMaterial from 'vue-material'
+Vue.use(VueMaterial);
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+
 Vue.component('registersale', require('./components/RegisterSaleComponentTab.vue'));
 Vue.use('registersale');
 const app = new Vue({
