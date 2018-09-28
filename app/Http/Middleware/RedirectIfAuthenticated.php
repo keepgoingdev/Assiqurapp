@@ -18,10 +18,16 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            // if(Auth::user()->hasRole('admin'))
-            //     return redirect('/admin/customers');
-            // else
-            //     return redirect('/');
+
+            if (strpos($request->getPathInfo(), '/admin') === 0) {
+                // It starts with 'http'
+                echo "sdf";
+                exit;
+                return redirect('admin.sales');
+            }
+            exit;
+            return redirect('/registersale');
+
         }
 
         return $next($request);

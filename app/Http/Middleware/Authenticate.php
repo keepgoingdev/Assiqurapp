@@ -14,6 +14,11 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        if (strpos($request->getPathInfo(), '/admin') === 0) {
+            // It starts with 'http'
+            return route('admin.login');
+        }
+
         return route('login');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /*
@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/customers';
+    //protected $redirectTo = '/admin/sales';
 
     /**
      * Create a new controller instance.
@@ -42,8 +42,8 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
-    public function redirectTo(){
-
-        return '/admin/customers';
+    protected function loggedOut(Request $request)
+    {
+        return redirect(route('admin.login'));
     }
 }
