@@ -21,11 +21,8 @@ class RedirectIfAuthenticated
 
             if (strpos($request->getPathInfo(), '/admin') === 0) {
                 // It starts with 'http'
-                echo "sdf";
-                exit;
-                return redirect('admin.sales');
+                return redirect(route('admin.sales'));
             }
-            exit;
             return redirect('/registersale');
 
         }

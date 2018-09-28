@@ -1,6 +1,6 @@
 <template>
   <form-wizard ref="formWizard" @on-complete="onComplete" shape = "circle" color="#e67e22" title = "" subtitle = "">
-            <tab-content title="Age" icon="ti-user" :before-change="ageStepValidate">
+            <tab-content title="l'età " icon="ti-user" :before-change="ageStepValidate">
                 <div class="container justify-content-center align-items-center align-content-center align-self-center" id="app-head" style="background-image:url(&quot;assets/img/team-motivation-teamwork-together-53958.jpeg&quot;);background-position:center;background-size:cover;background-repeat:no-repeat;">
                     <h4 class="text-center text-head" style="font-family:Montserrat, sans-serif;font-style:normal;font-weight:bold;font-size:15px;padding-top:21px;color:rgb(230,230,230);">Ognuno di noi ha tante cose a cui tiene,<br></h4>
                     <div class="row text-center">
@@ -12,17 +12,17 @@
                     <p class="para-data" style="color:rgba(33,37,41,0.84);">Scegli il prodotto più completo che garantisca Tutela e Risparmio.&nbsp;</p>
                     <p class="para-data data-calco">Inserisci letà e ottieni la tua soluzione</p>
                     <div class = "age-wrapper">
-                        <NumberInputSpinner :min="18" :max="59" :integerOnly="true" v-model="form.age" />
+                        <NumberInputSpinner :min="18" :max="59" v-model="form.age" />
                     </div>
                 </div>
             </tab-content>
-            <tab-content title="Additional Info" icon="ti-settings">
+            <tab-content title="protezioni" icon="ti-hand-point-right">
                 <explanation-step></explanation-step>
             </tab-content>
-            <tab-content title="Last step" icon="ti-check">
+            <tab-content title="Pacchetto" icon="ti-money">
                 <SelectPackageStep @selectPackageHandler = "onSelectPackage" ></SelectPackageStep>
             </tab-content>
-            <tab-content title="Last step" icon="ti-check">
+            <tab-content title="Informazione" icon="ti-info">
                 <PersonalInfoStep ref="personalInfoStep"></PersonalInfoStep>
             </tab-content>
 
@@ -69,10 +69,10 @@
         },
         methods: {
             onComplete: function(){
-                this.agePrice = priceFromAge(this.age);
+                this.form.agePrice = this.priceFromAge(this.form.age);
+                console.log(this.form);
             },
             ageStepValidate: function(){
-                console.log(this.seller_id);
                 return this.form.age >= 18 && this.form.age <= 59;
             },
             onSelectPackage: function(price){
@@ -82,7 +82,7 @@
             finishSteps: function(){
                 if(this.$refs.personalInfoStep.validateUser())
                 {
-                    this.personalInfo = this.$refs.personalInfoStep.form;
+                    this.form.personalInfo = this.$refs.personalInfoStep.form;
                     this.$refs.formWizard.$emit('on-complete');
                 }
             },

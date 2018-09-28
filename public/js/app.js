@@ -47519,10 +47519,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         onComplete: function onComplete() {
-            this.agePrice = priceFromAge(this.age);
+            this.form.agePrice = this.priceFromAge(this.form.age);
+            console.log(this.form);
         },
         ageStepValidate: function ageStepValidate() {
-            console.log(this.seller_id);
             return this.form.age >= 18 && this.form.age <= 59;
         },
         onSelectPackage: function onSelectPackage(price) {
@@ -47531,7 +47531,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         finishSteps: function finishSteps() {
             if (this.$refs.personalInfoStep.validateUser()) {
-                this.personalInfo = this.$refs.personalInfoStep.form;
+                this.form.personalInfo = this.$refs.personalInfoStep.form;
                 this.$refs.formWizard.$emit('on-complete');
             }
         },
@@ -56200,154 +56200,113 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'FormValidation',
-    mixins: [__WEBPACK_IMPORTED_MODULE_0_vuelidate__["validationMixin"]],
-    data: function data() {
-        return {
-            form: {
-                contractorType: null,
-                contractorFirstName: null,
-                contractorLastName: null,
-                contractorAddress: null,
-                contractorTaxCode: null,
-                contractorBirthday: null,
-                contractorBirthPlace: null,
-                contractorEmail: null,
-                contractorTelephone: null,
+  name: 'FormValidation',
+  mixins: [__WEBPACK_IMPORTED_MODULE_0_vuelidate__["validationMixin"]],
+  data: function data() {
+    return {
+      form: {
+        contractorType: null,
+        contractorFirstName: null,
+        contractorLastName: null,
+        contractorAddress: null,
+        contractorTaxCode: null,
+        contractorBirthday: null,
+        contractorBirthPlace: null,
+        contractorEmail: null,
+        contractorTelephone: null,
 
-                insuredType: null,
-                insuredFirstName: null,
-                insuredLastName: null,
-                insuredAddress: null,
-                insuredTaxCode: null,
-                insuredBirthday: null,
-                insuredBirthPlace: null,
-                insuredEmail: null,
-                insuredTelephone: null,
+        insuredType: null,
+        insuredFirstName: null,
+        insuredLastName: null,
+        insuredAddress: null,
+        insuredTaxCode: null,
+        insuredBirthday: null,
+        insuredBirthPlace: null,
+        insuredEmail: null,
+        insuredTelephone: null,
 
-                deathBenType: null,
-                deathBenFirstName: null,
-                deathBenLastName: null,
-                deathBenAddress: null,
-                deathBenTaxCode: null,
-                deathBenBirthday: null,
-                deathBenBirthPlace: null,
-                deathBenEmail: null,
-                deathBenTelephone: null,
+        deathBenType: null,
+        deathBenFirstName: null,
+        deathBenLastName: null,
+        deathBenAddress: null,
+        deathBenTaxCode: null,
+        deathBenBirthday: null,
+        deathBenBirthPlace: null,
+        deathBenEmail: null,
+        deathBenTelephone: null,
 
-                receiveEmail: null
-            }
-        };
-    },
-    validations: {
-        form: {
-            contractorType: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            contractorFirstName: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            contractorLastName: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            contractorAddress: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            contractorTaxCode: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            contractorBirthday: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            contractorBirthPlace: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            contractorEmail: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"],
-                email: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["email"]
-            },
-            contractorTelephone: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
+        receiveEmail: null
+      }
+    };
+  },
+  validations: {
+    form: {
+      contractorType: {
+        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+      },
+      contractorFirstName: {
+        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+      },
+      contractorLastName: {
+        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+      },
+      contractorAddress: {
+        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+      },
+      contractorTaxCode: {
+        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+      },
+      contractorBirthday: {
+        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+      },
+      contractorBirthPlace: {
+        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+      },
+      contractorEmail: {
+        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"],
+        email: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["email"]
+      },
+      contractorTelephone: {
+        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+      },
 
-            insuredType: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            insuredFirstName: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            insuredLastName: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            insuredAddress: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            insuredTaxCode: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            insuredBirthday: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            insuredBirthPlace: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            insuredEmail: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"],
-                email: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["email"]
-            },
-            insuredTelephone: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
+      insuredType: {},
+      insuredFirstName: {},
+      insuredLastName: {},
+      insuredAddress: {},
+      insuredTaxCode: {},
+      insuredBirthday: {},
+      insuredBirthPlace: {},
+      insuredEmail: {},
+      insuredTelephone: {},
 
-            deathBenType: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            deathBenFirstName: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            deathBenLastName: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            deathBenAddress: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            deathBenTaxCode: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            deathBenBirthday: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            deathBenBirthPlace: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            deathBenEmail: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"],
-                email: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["email"]
-            },
-            deathBenTelephone: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-            },
-            receiveEmail: {
-                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"],
-                email: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["email"]
-            }
-        }
-    },
-    methods: {
-        getValidationClass: function getValidationClass(fieldName) {
-            var field = this.$v.form[fieldName];
-
-            if (field) {
-                return {
-                    'md-invalid': field.$invalid && field.$dirty
-                };
-            }
-        },
-        validateUser: function validateUser() {
-            this.$v.$touch();
-            return !this.$v.$invalid;
-        }
+      deathBenType: {},
+      deathBenFirstName: {},
+      deathBenLastName: {},
+      deathBenAddress: {},
+      deathBenTaxCode: {},
+      deathBenBirthday: {},
+      deathBenBirthPlace: {},
+      deathBenEmail: {},
+      deathBenTelephone: {},
+      receiveEmail: {}
     }
+  },
+  methods: {
+    getValidationClass: function getValidationClass(fieldName) {
+      var field = this.$v.form[fieldName];
+
+      if (field) {
+        return {
+          'md-invalid': field.$invalid && field.$dirty
+        };
+      }
+    },
+    validateUser: function validateUser() {
+      this.$v.$touch();
+      return !this.$v.$invalid;
+    }
+  }
 });
 
 /***/ }),
@@ -58396,7 +58355,7 @@ var render = function() {
         "tab-content",
         {
           attrs: {
-            title: "Age",
+            title: "l'età ",
             icon: "ti-user",
             "before-change": _vm.ageStepValidate
           }
@@ -58483,7 +58442,7 @@ var render = function() {
               { staticClass: "age-wrapper" },
               [
                 _c("NumberInputSpinner", {
-                  attrs: { min: 18, max: 59, integerOnly: true },
+                  attrs: { min: 18, max: 59 },
                   model: {
                     value: _vm.form.age,
                     callback: function($$v) {
@@ -58501,14 +58460,14 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tab-content",
-        { attrs: { title: "Additional Info", icon: "ti-settings" } },
+        { attrs: { title: "protezioni", icon: "ti-hand-point-right" } },
         [_c("explanation-step")],
         1
       ),
       _vm._v(" "),
       _c(
         "tab-content",
-        { attrs: { title: "Last step", icon: "ti-check" } },
+        { attrs: { title: "Pacchetto", icon: "ti-money" } },
         [
           _c("SelectPackageStep", {
             on: { selectPackageHandler: _vm.onSelectPackage }
@@ -58519,7 +58478,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tab-content",
-        { attrs: { title: "Last step", icon: "ti-check" } },
+        { attrs: { title: "Informazione", icon: "ti-info" } },
         [_c("PersonalInfoStep", { ref: "personalInfoStep" })],
         1
       )

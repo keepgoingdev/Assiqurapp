@@ -31,3 +31,18 @@
     padding-top: 5px !important;
     padding-bottom: 5px !important;
 }
+
+.front-end-navbar{
+    display:block !important;
+}
+
+.front-end-logo{
+    float:left;
+    width:40px;
+    margin-top:auto;
+}
+
+span.stepTitle{
+    font-size: 20px;
+    font-weight: 600;
+}
