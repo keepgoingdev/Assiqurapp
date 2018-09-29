@@ -48,5 +48,9 @@ class User extends Authenticatable
 
     ];
 
+    public function sales(){
+        return $this->hasMany('\App\Models\Admin\Sale', 'seller_id');
+    }
+
 
 }

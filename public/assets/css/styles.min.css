@@ -46,3 +46,15 @@ span.stepTitle{
     font-size: 20px;
     font-weight: 600;
 }
+
+.logo-image{
+    height: 40px !important;
+}
+
+.dropdown-toggle::after{
+    border:none !important;
+}
+
+.register_step_logo{
+    width: 300px !important;
+}

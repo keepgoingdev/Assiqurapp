@@ -19,11 +19,11 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
 
-            if (strpos($request->getPathInfo(), '/admin') === 0) {
-                // It starts with 'http'
-                return redirect(route('admin.sales'));
-            }
-            return redirect('/registersale');
+            // if (strpos($request->getPathInfo(), '/admin') === 0) {
+            //     // It starts with 'http'
+            //     return redirect(route('admin.sales.index'));
+            // }
+            // return redirect('/registersale');
 
         }
 

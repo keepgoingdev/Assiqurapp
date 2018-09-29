@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-
+use Auth;
+use App\Models\User;
 class UserController extends AppBaseController
 {
     /** @var  UserRepository */
@@ -31,6 +32,11 @@ class UserController extends AppBaseController
     {
         $this->userRepository->pushCriteria(new RequestCriteria($request));
         $users = $this->userRepository->all();
+
+        $users = User::whereHas('roles', function($q){
+            $q->whereNotIn('name', ['admin']);
+        })->get();
+
 
         return view('admin.users.index')
             ->with('users', $users);
@@ -104,6 +110,12 @@ class UserController extends AppBaseController
         return view('admin.users.edit')->with('user', $user);
     }
 
+    public function profile()
+    {
+        $user = Auth::user();
+        return view('admin.users.profile')->with('user', $user);
+    }
+
     /**
      * Update the specified User in storage.
      *
@@ -114,14 +126,13 @@ class UserController extends AppBaseController
      */
     public function update($id, UpdateUserRequest $request)
     {
-
         $this->validate($request, [
-            'name' => 'required|min:3|max:50',
+            'first_name' => 'required|min:3|max:50',
+            'last_name' => 'required|min:3|max:50',
             'email' => 'email|required'
         ]);
 
         $user = $this->userRepository->findWithoutFail($id);
-
         if (empty($user)) {
             Flash::error('User not found');
 
@@ -133,7 +144,7 @@ class UserController extends AppBaseController
             $user->password = bcrypt($request->password);
         }
 
-        $user->syncRoles([$request->role]);
+        $user->syncRoles('seller');
 
         $user->save();
 
@@ -142,6 +153,29 @@ class UserController extends AppBaseController
         Flash::success('User updated successfully.');
 
         return redirect(route('admin.users.index'));
+    }
+
+    public function update_profile(UpdateUserRequest $request)
+    {
+        $this->validate($request, [
+            'first_name' => 'required|min:3|max:50',
+            'last_name' => 'required|min:3|max:50',
+            'email' => 'email|required'
+        ]);
+
+        $user = Auth::user();
+
+        if(isset($request->password))
+        {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        // $user = $this->userRepository->update($request->all(), $id);
+
+        Flash::success('User updated successfully.');
+        return redirect(route('admin.users.profile'));
     }
 
     /**

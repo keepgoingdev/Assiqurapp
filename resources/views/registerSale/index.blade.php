@@ -3,7 +3,12 @@
 @section('content')
 
 <div id="app">
-    <registersale seller_id = "1"/>
+        @if(Auth::check())
+            <registersale logged_in = "1"/>
+        @else
+            <registersale logged_in = "0"/>
+        @endif
+
 </div>
 
 @endsection

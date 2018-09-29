@@ -4,7 +4,7 @@
             <th>Nome</th>
             <th>Cognome</th>
             <th>Email</th>
-            <th>Role</th>
+            <!--<th>Role</th>-->
             <th colspan="3">Action</th>
         </tr>
     </thead>
@@ -14,7 +14,7 @@
             <td>{!! $user->first_name !!}</td>
             <td>{!! $user->last_name !!}</td>
             <td>{!! $user->email !!}</td>
-            <td>{!! $user->roles->pluck('name') !!}</td>
+            <!--<td>{!! $user->roles->pluck('name') !!}</td>-->
             <td>
                 {!! Form::open(['route' => ['admin.users.destroy', $user->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

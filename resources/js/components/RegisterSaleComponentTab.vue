@@ -1,5 +1,8 @@
 <template>
   <form-wizard ref="formWizard" @on-complete="onComplete" shape = "circle" color="#e67e22" title = "" subtitle = "">
+       <h2 slot="title">
+           <img class = "register_step_logo" src = "assets/img/Assiqura_Logo.png"/>
+       </h2>
             <tab-content title="l'età " icon="ti-user" :before-change="ageStepValidate">
                 <div class="container justify-content-center align-items-center align-content-center align-self-center" id="app-head" style="background-image:url(&quot;assets/img/team-motivation-teamwork-together-53958.jpeg&quot;);background-position:center;background-size:cover;background-repeat:no-repeat;">
                     <h4 class="text-center text-head" style="font-family:Montserrat, sans-serif;font-style:normal;font-weight:bold;font-size:15px;padding-top:21px;color:rgb(230,230,230);">Ognuno di noi ha tante cose a cui tiene,<br></h4>
@@ -47,8 +50,12 @@
     import SelectPackageStep from './SelectPackageStep.vue';
     import PersonalInfoStep from './PersonalInfoStep.vue';
 
+    import VueRouter from 'vue-router'
+    Vue.use(require('vue-cookies'));
+    Vue.use(VueRouter);
+
     export default {
-        props: ['seller_id'],
+        props: ['logged_in'],
         components: {
             ExplanationStep,
             SelectPackageStep,
@@ -61,22 +68,52 @@
             return {
             form :{
                 age: 18,
-                packagePrice:0,
+                packageType:0,
                 personalInfo: {},
                 agePrice: 0
             }
           }
         },
+        mounted(){
+            if(this.check_logged_in())
+            {
+                let register_data = this.$cookies.get('register_data', this.form);
+                if(register_data != "null")
+                {
+                    this.send_register_request(register_data);
+                }
+            }
+        },
         methods: {
             onComplete: function(){
                 this.form.agePrice = this.priceFromAge(this.form.age);
-                console.log(this.form);
+                if(this.check_logged_in())
+                    this.send_register_request(this.form);
+                else
+                {
+                    this.$cookies.set('register_data', this.form);
+                    location.href = "/login";
+                }
             },
+            check_logged_in: function(){
+                return this.logged_in == 1;
+            },
+            send_register_request: function(form_values){
+                axios.post('/register_sale', form_values).then((response)=>{
+                    if(response.data.success)
+                    {
+                        alert("New sale successfully registerd!");
+                        location.reload();
+                    }
+                });
+                this.$cookies.set('register_data', null);
+            }
+            ,
             ageStepValidate: function(){
                 return this.form.age >= 18 && this.form.age <= 59;
             },
             onSelectPackage: function(price){
-                this.form.packagePrice = price;
+                this.form.packageType = price;
                 this.$refs.formWizard.nextTab();
             },
             finishSteps: function(){

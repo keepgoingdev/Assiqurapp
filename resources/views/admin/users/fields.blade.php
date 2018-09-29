@@ -28,12 +28,12 @@
     {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
 </div>
 
-<!-- Password Field -->
+<!--
 <div class="form-group col-sm-6">
     {!! Form::label('role', 'Role:') !!}
     {!! Form::select('role', \App\Models\User::ROLES, null, ['class' => 'form-control']) !!}
 </div>
-
+-->
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
