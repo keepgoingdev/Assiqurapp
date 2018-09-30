@@ -13,7 +13,7 @@
                 </div>
                 <div class="container">
                     <p class="para-data" style="color:rgba(33,37,41,0.84);">Scegli il prodotto più completo che garantisca Tutela e Risparmio.&nbsp;</p>
-                    <p class="para-data data-calco">Inserisci letà e ottieni la tua soluzione</p>
+                    <p class="para-data data-calco">Inserisci l'età e ottieni la tua soluzione</p>
                     <div class = "age-wrapper">
                         <NumberInputSpinner :min="18" :max="59" v-model="form.age" />
                     </div>
@@ -23,7 +23,7 @@
                 <explanation-step></explanation-step>
             </tab-content>
             <tab-content title="Pacchetto" icon="ti-money">
-                <SelectPackageStep @selectPackageHandler = "onSelectPackage" ></SelectPackageStep>
+                <SelectPackageStep ref="selectPackageStep" @selectPackageHandler = "onSelectPackage" ></SelectPackageStep>
             </tab-content>
             <tab-content title="Informazione" icon="ti-info">
                 <PersonalInfoStep ref="personalInfoStep"></PersonalInfoStep>
@@ -31,11 +31,11 @@
 
             <template slot="footer" slot-scope="props">
                 <div class=wizard-footer-left>
-                    <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" @click.native="props.prevTab()" :style="props.fillButtonStyle">Previous</wizard-button>
+                    <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" @click.native="props.prevTab()" :style="props.fillButtonStyle">Indietro</wizard-button>
                     </div>
                     <div class="wizard-footer-right">
-                    <wizard-button v-if="!props.isLastStep && props.activeTabIndex != 2" @click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Next</wizard-button>
-                    <wizard-button v-else-if="props.isLastStep" class="wizard-footer-right finish-button" @click.native="finishSteps" :style="props.fillButtonStyle">Done</wizard-button>
+                    <wizard-button v-if="!props.isLastStep && props.activeTabIndex != 2" @click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Avvanti</wizard-button>
+                    <wizard-button v-else-if="props.isLastStep" class="wizard-footer-right finish-button" @click.native="finishSteps" :style="props.fillButtonStyle">Finire</wizard-button>
                 </div>
             </template>
         </form-wizard>
@@ -68,10 +68,10 @@
             return {
             form :{
                 age: 18,
-                packageType:0,
+                price: 0,
                 personalInfo: {},
-                agePrice: 0
-            }
+                packageType: 0
+            },
           }
         },
         mounted(){
@@ -86,7 +86,6 @@
         },
         methods: {
             onComplete: function(){
-                this.form.agePrice = this.priceFromAge(this.form.age);
                 if(this.check_logged_in())
                     this.send_register_request(this.form);
                 else
@@ -110,10 +109,14 @@
             }
             ,
             ageStepValidate: function(){
+                //let the slect package step know the age price
+                this.$refs.selectPackageStep.agePrice = this.priceFromAge(this.form.age);
+
                 return this.form.age >= 18 && this.form.age <= 59;
             },
-            onSelectPackage: function(price){
-                this.form.packageType = price;
+            onSelectPackage: function(price, packageType){
+                this.form.price = price;
+                this.form.packageType = packageType;
                 this.$refs.formWizard.nextTab();
             },
             finishSteps: function(){

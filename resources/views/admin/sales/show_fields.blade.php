@@ -21,10 +21,10 @@
     <p>{!! $sale->packageType !!}</p>
 </div>
 
-<!-- Ageprice Field -->
+<!-- Price Field -->
 <div class="form-group">
-    {!! Form::label('agePrice', 'Ageprice:') !!}
-    <p>{!! $sale->agePrice !!}</p>
+    {!! Form::label('price', 'Price:') !!}
+    <p>{!! $sale->price !!}</p>
 </div>
 
 <!-- Contractortype Field -->

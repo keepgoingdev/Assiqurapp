@@ -24,7 +24,7 @@ class RegisterSaleController extends Controller
             $sale->age = $sale_data['age'];
             $sale->seller_id = Auth::user()->id;
             $sale->packageType = $sale_data['packageType'];
-            $sale->agePrice = $sale_data['agePrice'];
+            $sale->price = $sale_data['price'];
 
             if($sale->save())
                 return response()->json(['success' => true]);

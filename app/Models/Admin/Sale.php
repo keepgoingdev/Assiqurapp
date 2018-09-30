@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection roleHasPermissions
  * @property integer age
  * @property integer packageType
- * @property integer agePrice
+ * @property integer price
  * @property integer seller_id
  * @property string contractorType
  * @property string contractorFirstName
@@ -60,7 +60,7 @@ class Sale extends Model
     public $fillable = [
         'age',
         'packageType',
-        'agePrice',
+        'price',
         'seller_id',
         'contractorType',
         'contractorFirstName',
@@ -101,7 +101,7 @@ class Sale extends Model
         'id' => 'integer',
         'age' => 'integer',
         'packageType' => 'integer',
-        'agePrice' => 'integer',
+        'price' => 'integer',
         'seller_id' => 'integer',
         'contractorType' => 'string',
         'contractorFirstName' => 'string',

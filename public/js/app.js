@@ -25576,7 +25576,7 @@ function withParams(paramsOrClosure, maybeValidator) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(18);
-module.exports = __webpack_require__(94);
+module.exports = __webpack_require__(96);
 
 
 /***/ }),
@@ -78429,7 +78429,7 @@ var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(51)
 /* template */
-var __vue_template__ = __webpack_require__(93)
+var __vue_template__ = __webpack_require__(95)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78483,7 +78483,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SelectPackageStep_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__SelectPackageStep_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_router__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_router__ = __webpack_require__(93);
 //
 //
 //
@@ -78537,7 +78537,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-Vue.use(__webpack_require__(96));
+Vue.use(__webpack_require__(94));
 Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -78554,9 +78554,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
         return {
             form: {
                 age: 18,
-                packageType: 0,
+                price: 0,
                 personalInfo: {},
-                agePrice: 0
+                packageType: 0
             }
         };
     },
@@ -78571,7 +78571,6 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
 
     methods: {
         onComplete: function onComplete() {
-            this.form.agePrice = this.priceFromAge(this.form.age);
             if (this.check_logged_in()) this.send_register_request(this.form);else {
                 this.$cookies.set('register_data', this.form);
                 location.href = "/login";
@@ -78591,10 +78590,14 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
         },
 
         ageStepValidate: function ageStepValidate() {
+            //let the slect package step know the age price
+            this.$refs.selectPackageStep.agePrice = this.priceFromAge(this.form.age);
+
             return this.form.age >= 18 && this.form.age <= 59;
         },
-        onSelectPackage: function onSelectPackage(price) {
-            this.form.packageType = price;
+        onSelectPackage: function onSelectPackage(price, packageType) {
+            this.form.price = price;
+            this.form.packageType = packageType;
             this.$refs.formWizard.nextTab();
         },
         finishSteps: function finishSteps() {
@@ -84480,9 +84483,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     methods: {
-        onSelectPackage: function onSelectPackage(price) {
-            this.$emit('selectPackageHandler', price);
+        onSelectPackage: function onSelectPackage(type) {
+            var price = 0;
+            if (type == 1) price = this.agePrice;else if (type == 2) price = this.agePrice * 2;else if (type == 3) price = this.agePrice * 3;
+            this.$emit('selectPackageHandler', price, type);
         }
+    },
+    data: function data() {
+        return {
+            agePrice: 0
+        };
     }
 });
 
@@ -84512,7 +84522,71 @@ var render = function() {
             _c("div", { staticClass: "modal-content" }, [
               _vm._m(1),
               _vm._v(" "),
-              _vm._m(2),
+              _c(
+                "div",
+                {
+                  staticClass: "modal-body",
+                  staticStyle: {
+                    "margin-top": "-16px",
+                    "padding-bottom": "0px"
+                  }
+                },
+                [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "table-responsive table-liqui" }, [
+                    _c("table", { staticClass: "table" }, [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("td", { staticClass: "coliqui" }, [
+                            _vm._v("TCM (Premorienza)")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "coliqui",
+                              staticStyle: { "font-weight": "bold" }
+                            },
+                            [
+                              _c("strong", [
+                                _c("div", [_vm._v(_vm._s(_vm.agePrice + "€"))])
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", { staticClass: "coliqui" }, [
+                            _vm._v(
+                              "Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "coliqui",
+                              staticStyle: { "font-weight": "bold" }
+                            },
+                            [
+                              _c("strong", [
+                                _c("div", [_vm._v(_vm._s(_vm.agePrice + "€"))])
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer footer-liqui" }, [
                 _c(
@@ -84522,7 +84596,7 @@ var render = function() {
                     attrs: { type: "button", "data-dismiss": "modal" },
                     on: {
                       click: function($event) {
-                        _vm.onSelectPackage(130)
+                        _vm.onSelectPackage(1)
                       }
                     }
                   },
@@ -84548,9 +84622,79 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(3),
+              _vm._m(6),
               _vm._v(" "),
-              _vm._m(4),
+              _c(
+                "div",
+                {
+                  staticClass: "modal-body",
+                  staticStyle: {
+                    "margin-top": "-16px",
+                    "padding-bottom": "0px"
+                  }
+                },
+                [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _vm._m(9),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "table-responsive table-liqui" }, [
+                    _c("table", { staticClass: "table" }, [
+                      _vm._m(10),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("td", { staticClass: "coliqui" }, [
+                            _vm._v("TCM (Premorienza)")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "coliqui",
+                              staticStyle: { "font-weight": "bold" }
+                            },
+                            [
+                              _c("strong", [
+                                _c("div", [
+                                  _vm._v(_vm._s(_vm.agePrice * 2 + "€"))
+                                ])
+                              ]),
+                              _c("br")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", { staticClass: "coliqui" }, [
+                            _vm._v(
+                              "Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "coliqui",
+                              staticStyle: { "font-weight": "bold" }
+                            },
+                            [
+                              _c("strong", [
+                                _c("div", [
+                                  _vm._v(_vm._s(_vm.agePrice * 2 + "€"))
+                                ])
+                              ]),
+                              _c("br")
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer footer-liqui" }, [
                 _c(
@@ -84560,7 +84704,7 @@ var render = function() {
                     attrs: { type: "button", "data-dismiss": "modal" },
                     on: {
                       click: function($event) {
-                        _vm.onSelectPackage(190)
+                        _vm.onSelectPackage(2)
                       }
                     }
                   },
@@ -84586,9 +84730,79 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(5),
+              _vm._m(11),
               _vm._v(" "),
-              _vm._m(6),
+              _c(
+                "div",
+                {
+                  staticClass: "modal-body",
+                  staticStyle: {
+                    "margin-top": "-16px",
+                    "padding-bottom": "0px"
+                  }
+                },
+                [
+                  _vm._m(12),
+                  _vm._v(" "),
+                  _vm._m(13),
+                  _vm._v(" "),
+                  _vm._m(14),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "table-responsive table-liqui" }, [
+                    _c("table", { staticClass: "table" }, [
+                      _vm._m(15),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("td", { staticClass: "coliqui" }, [
+                            _vm._v("TCM (Premorienza)")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "coliqui",
+                              staticStyle: { "font-weight": "bold" }
+                            },
+                            [
+                              _c("strong", [
+                                _c("div", [
+                                  _vm._v(_vm._s(_vm.agePrice * 3 + "€"))
+                                ])
+                              ]),
+                              _c("br")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", { staticClass: "coliqui" }, [
+                            _vm._v(
+                              "Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "coliqui",
+                              staticStyle: { "font-weight": "bold" }
+                            },
+                            [
+                              _c("strong", [
+                                _c("div", [
+                                  _vm._v(_vm._s(_vm.agePrice * 3 + "€"))
+                                ])
+                              ]),
+                              _c("br")
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer footer-liqui" }, [
                 _c(
@@ -84598,7 +84812,7 @@ var render = function() {
                     attrs: { type: "button", "data-dismiss": "modal" },
                     on: {
                       click: function($event) {
-                        _vm.onSelectPackage(300)
+                        _vm.onSelectPackage(3)
                       }
                     }
                   },
@@ -84762,701 +84976,620 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal-body",
-        staticStyle: { "margin-top": "-16px", "padding-bottom": "0px" }
-      },
-      [
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    staticClass: "cel-upleft",
-                    staticStyle: { color: "rgb(31,163,73)" }
-                  },
-                  [_vm._v("Garanzie Ospedaliere")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max.")]
-                )
-              ])
-            ]),
+    return _c("div", { staticClass: "table-responsive table-liqui" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", [
+          _c("tr", [
+            _c(
+              "th",
+              {
+                staticClass: "cel-upleft",
+                staticStyle: { color: "rgb(31,163,73)" }
+              },
+              [_vm._v("Garanzie Ospedaliere")]
+            ),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Ricovero con/senza intervento chirurgico")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("25.000"), _c("strong", [_vm._v("€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Grandi interventi chiurgici")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("50.000"), _c("strong", [_vm._v("€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Parto naturale /parto cesareo-aborto")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("2.000/4.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Laser ed eccimeri (per occhio)")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("1.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Interventi ambulatoriali")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("1.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("No limite retta di degenza")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Spese pre e post")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("gg. 90/90")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Condizioni in network")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("Senza franchigia e scoperti")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Condizioni fuori network")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("Scoperto 10% min.1500€ max.3000€")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("Degenza Sostitutiva")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("25€ per 90gg")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Alta Diagnostica")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("500€ 20% scoperto, ")]),
-                    _c("br"),
-                    _c("strong", [_vm._v("50€ min.")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Visite ed accertamenti")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("500€ 20% scoperto, ")]),
-                    _c("br"),
-                    _c("strong", [_vm._v("50€ min.")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Lenti e occhiali")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-remove",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(177,12,12)"
-                      }
-                    }),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Long Term Care")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-remove",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(177,12,12)"
-                      }
-                    }),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Rimborso ticket")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("150€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: {
-                      "font-weight": "bold",
-                      "font-size": "12px",
-                      color: "rgb(31,163,37)"
-                    },
-                    attrs: { colspan: "3" }
-                  },
-                  [_vm._v("Garanzie Extra-Ospedaliere")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Assistenza superstiti")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-remove",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(177,12,12)"
-                      }
-                    }),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Assistenza perdita impiego")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-remove",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(177,12,12)"
-                      }
-                    })
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Home test")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-remove",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(177,12,12)"
-                      }
-                    }),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Strumentazione ausiliaria")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("Misuratore pressione da braccio")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("Check-up")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-remove",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(177,12,12)"
-                      }
-                    }),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("Servizi Assistenza H24")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ])
-            ])
+            _c(
+              "th",
+              {
+                staticStyle: {
+                  "font-family": "Montserrat, sans-serif",
+                  "font-weight": "bold",
+                  color: "rgb(234,83,18)"
+                }
+              },
+              [_vm._v("max.")]
+            )
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c("th", { staticClass: "cel-upleft" }, [
-                  _vm._v("Capitale accumulato rivalutato")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max."), _c("br")]
-                )
-              ])
+        _c("tbody", [
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Ricovero con/senza intervento chirurgico")
             ]),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 15 anni")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("12.351€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 20 anni")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("20.002€")]), _c("br")]
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    staticClass: "cel-upleft",
-                    staticStyle: { color: "#f68c1f" }
-                  },
-                  [_vm._v("Polizza Infortuni")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max."), _c("br")]
-                )
-              ])
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("25.000"), _c("strong", [_vm._v("€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Grandi interventi chiurgici")
             ]),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Premorienza infortuni")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("40.000"), _c("strong", [_vm._v("€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Invalidità Permanente")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("40.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Indennità giornaliera ricovero/gesso")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("20€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Assistenza")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    staticClass: "cel-upleft",
-                    staticStyle: { color: "#dcbb0f" }
-                  },
-                  [_vm._v("Garanzie sempre operanti")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max."), _c("br")]
-                )
-              ])
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("50.000"), _c("strong", [_vm._v("€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Parto naturale /parto cesareo-aborto")
             ]),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("TCM (Premorienza)")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_c("div", { staticClass: "vitru30" })])]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v(
-                    "Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)"
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_c("div", { staticClass: "vitru30" })])]
-                )
-              ])
-            ])
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("2.000/4.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Laser ed eccimeri (per occhio)")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("1.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Interventi ambulatoriali")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("1.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("No limite retta di degenza")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Spese pre e post")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("gg. 90/90")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Condizioni in network")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("Senza franchigia e scoperti")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Condizioni fuori network")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("Scoperto 10% min.1500€ max.3000€")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("Degenza Sostitutiva")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("25€ per 90gg")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Alta Diagnostica")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("500€ 20% scoperto, ")]),
+                _c("br"),
+                _c("strong", [_vm._v("50€ min.")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Visite ed accertamenti")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("500€ 20% scoperto, ")]),
+                _c("br"),
+                _c("strong", [_vm._v("50€ min.")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Lenti e occhiali")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-remove",
+                  staticStyle: { "font-size": "13px", color: "rgb(177,12,12)" }
+                }),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Long Term Care")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-remove",
+                  staticStyle: { "font-size": "13px", color: "rgb(177,12,12)" }
+                }),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Rimborso ticket")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("150€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: {
+                  "font-weight": "bold",
+                  "font-size": "12px",
+                  color: "rgb(31,163,37)"
+                },
+                attrs: { colspan: "3" }
+              },
+              [_vm._v("Garanzie Extra-Ospedaliere")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Assistenza superstiti")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-remove",
+                  staticStyle: { "font-size": "13px", color: "rgb(177,12,12)" }
+                }),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Assistenza perdita impiego")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-remove",
+                  staticStyle: { "font-size": "13px", color: "rgb(177,12,12)" }
+                })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Home test")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-remove",
+                  staticStyle: { "font-size": "13px", color: "rgb(177,12,12)" }
+                }),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Strumentazione ausiliaria")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("Misuratore pressione da braccio")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("Check-up")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-remove",
+                  staticStyle: { "font-size": "13px", color: "rgb(177,12,12)" }
+                }),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("Servizi Assistenza H24")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
           ])
         ])
-      ]
-    )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table-responsive table-liqui" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", [
+          _c("tr", [
+            _c("th", { staticClass: "cel-upleft" }, [
+              _vm._v("Capitale accumulato rivalutato")
+            ]),
+            _vm._v(" "),
+            _c(
+              "th",
+              {
+                staticStyle: {
+                  "font-family": "Montserrat, sans-serif",
+                  "font-weight": "bold",
+                  color: "rgb(234,83,18)"
+                }
+              },
+              [_vm._v("max."), _c("br")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tbody", [
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 15 anni")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("12.351€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 20 anni")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("20.002€")]), _c("br")]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table-responsive table-liqui" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", [
+          _c("tr", [
+            _c(
+              "th",
+              { staticClass: "cel-upleft", staticStyle: { color: "#f68c1f" } },
+              [_vm._v("Polizza Infortuni")]
+            ),
+            _vm._v(" "),
+            _c(
+              "th",
+              {
+                staticStyle: {
+                  "font-family": "Montserrat, sans-serif",
+                  "font-weight": "bold",
+                  color: "rgb(234,83,18)"
+                }
+              },
+              [_vm._v("max."), _c("br")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tbody", [
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Premorienza infortuni")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("40.000"), _c("strong", [_vm._v("€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Invalidità Permanente")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("40.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Indennità giornaliera ricovero/gesso")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("20€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Assistenza")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c(
+          "th",
+          { staticClass: "cel-upleft", staticStyle: { color: "#dcbb0f" } },
+          [_vm._v("Garanzie sempre operanti")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: {
+              "font-family": "Montserrat, sans-serif",
+              "font-weight": "bold",
+              color: "rgb(234,83,18)"
+            }
+          },
+          [_vm._v("max."), _c("br")]
+        )
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -85489,669 +85622,597 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal-body",
-        staticStyle: { "margin-top": "-16px", "padding-bottom": "0px" }
-      },
-      [
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    staticClass: "cel-upleft",
-                    staticStyle: { color: "rgb(31,163,73)" }
-                  },
-                  [_vm._v("Garanzie Ospedaliere")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max.")]
-                )
-              ])
-            ]),
+    return _c("div", { staticClass: "table-responsive table-liqui" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", [
+          _c("tr", [
+            _c(
+              "th",
+              {
+                staticClass: "cel-upleft",
+                staticStyle: { color: "rgb(31,163,73)" }
+              },
+              [_vm._v("Garanzie Ospedaliere")]
+            ),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Ricovero con/senza intervento chirurgico")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("50.000"), _c("strong", [_vm._v("€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Grandi interventi chiurgici")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("100.000"), _c("strong", [_vm._v("€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Parto naturale /parto cesareo-aborto")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("2.000/4.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Laser ed eccimeri (per occhio)")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("1.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Interventi ambulatoriali")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("1.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("No limite retta di degenza")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Spese pre e post")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("gg. 90/90")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Condizioni in network")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("Senza franchigia e scoperti")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Condizioni fuori network")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("Scoperto 10% min.1500€ max.3000€")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("Degenza Sostitutiva")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("50€ per 90gg")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Alta Diagnostica")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("1.500€ 20% scoperto, ")]),
-                    _c("br"),
-                    _c("strong", [_vm._v("50€ min.")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Visite ed accertamenti")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("1.200€ 20% scoperto, ")]),
-                    _c("br"),
-                    _c("strong", [_vm._v("50€ min.")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Lenti e occhiali")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [
-                      _vm._v("100€ "),
-                      _c("em", [_vm._v("franchigia 50")])
-                    ]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Long Term Care")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("20.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Rimborso ticket")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("250€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: {
-                      "font-weight": "bold",
-                      "font-size": "12px",
-                      color: "rgb(31,163,37)"
-                    },
-                    attrs: { colspan: "3" }
-                  },
-                  [_vm._v("Garanzie sempre Operanti")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Assistenza superstiti")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("1.500€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Assistenza perdita impiego")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("em", [_vm._v("Esonero versamento max. 6 mesi")])]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Home test")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("1")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Strumentazione ausiliaria")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("Misuratore pressione da braccio")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("Check-up")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("Servizi Assistenza H24")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ])
-            ])
+            _c(
+              "th",
+              {
+                staticStyle: {
+                  "font-family": "Montserrat, sans-serif",
+                  "font-weight": "bold",
+                  color: "rgb(234,83,18)"
+                }
+              },
+              [_vm._v("max.")]
+            )
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c("th", { staticClass: "cel-upleft" }, [
-                  _vm._v("Capitale accumulato rivalutato")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max."), _c("br")]
-                )
-              ])
+        _c("tbody", [
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Ricovero con/senza intervento chirurgico")
             ]),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 15 anni")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("14.820€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 20 anni")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("24.002€")]), _c("br")]
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    staticClass: "cel-upleft",
-                    staticStyle: { color: "#f68c1f" }
-                  },
-                  [_vm._v("Polizza Infortuni")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max."), _c("br")]
-                )
-              ])
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("50.000"), _c("strong", [_vm._v("€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Grandi interventi chiurgici")
             ]),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Premorienza infortuni")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("80.000"), _c("strong", [_vm._v("€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Invalidità Permanente")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("80.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Indennità giornaliera ricovero/gesso")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("40€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Assistenza")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    staticClass: "cel-upleft",
-                    staticStyle: { color: "#dcbb0f" }
-                  },
-                  [_vm._v("Garanzie sempre operanti")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max."), _c("br")]
-                )
-              ])
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("100.000"), _c("strong", [_vm._v("€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Parto naturale /parto cesareo-aborto")
             ]),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("TCM (Premorienza)")
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("2.000/4.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Laser ed eccimeri (per occhio)")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("1.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Interventi ambulatoriali")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("1.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("No limite retta di degenza")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Spese pre e post")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("gg. 90/90")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Condizioni in network")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("Senza franchigia e scoperti")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Condizioni fuori network")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("Scoperto 10% min.1500€ max.3000€")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("Degenza Sostitutiva")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("50€ per 90gg")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Alta Diagnostica")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("1.500€ 20% scoperto, ")]),
+                _c("br"),
+                _c("strong", [_vm._v("50€ min.")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Visite ed accertamenti")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("1.200€ 20% scoperto, ")]),
+                _c("br"),
+                _c("strong", [_vm._v("50€ min.")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Lenti e occhiali")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [
+                  _vm._v("100€ "),
+                  _c("em", [_vm._v("franchigia 50")])
                 ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_c("div", { staticClass: "vitru60" })]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v(
-                    "Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)"
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_c("div", { staticClass: "vitru60" })]),
-                    _c("br")
-                  ]
-                )
-              ])
-            ])
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Long Term Care")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("20.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Rimborso ticket")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("250€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: {
+                  "font-weight": "bold",
+                  "font-size": "12px",
+                  color: "rgb(31,163,37)"
+                },
+                attrs: { colspan: "3" }
+              },
+              [_vm._v("Garanzie sempre Operanti")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Assistenza superstiti")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("1.500€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Assistenza perdita impiego")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("em", [_vm._v("Esonero versamento max. 6 mesi")])]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Home test")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("1")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Strumentazione ausiliaria")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("Misuratore pressione da braccio")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("Check-up")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("Servizi Assistenza H24")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
           ])
         ])
-      ]
-    )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table-responsive table-liqui" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", [
+          _c("tr", [
+            _c("th", { staticClass: "cel-upleft" }, [
+              _vm._v("Capitale accumulato rivalutato")
+            ]),
+            _vm._v(" "),
+            _c(
+              "th",
+              {
+                staticStyle: {
+                  "font-family": "Montserrat, sans-serif",
+                  "font-weight": "bold",
+                  color: "rgb(234,83,18)"
+                }
+              },
+              [_vm._v("max."), _c("br")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tbody", [
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 15 anni")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("14.820€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 20 anni")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("24.002€")]), _c("br")]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table-responsive table-liqui" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", [
+          _c("tr", [
+            _c(
+              "th",
+              { staticClass: "cel-upleft", staticStyle: { color: "#f68c1f" } },
+              [_vm._v("Polizza Infortuni")]
+            ),
+            _vm._v(" "),
+            _c(
+              "th",
+              {
+                staticStyle: {
+                  "font-family": "Montserrat, sans-serif",
+                  "font-weight": "bold",
+                  color: "rgb(234,83,18)"
+                }
+              },
+              [_vm._v("max."), _c("br")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tbody", [
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Premorienza infortuni")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("80.000"), _c("strong", [_vm._v("€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Invalidità Permanente")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("80.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Indennità giornaliera ricovero/gesso")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("40€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Assistenza")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c(
+          "th",
+          { staticClass: "cel-upleft", staticStyle: { color: "#dcbb0f" } },
+          [_vm._v("Garanzie sempre operanti")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: {
+              "font-family": "Montserrat, sans-serif",
+              "font-weight": "bold",
+              color: "rgb(234,83,18)"
+            }
+          },
+          [_vm._v("max."), _c("br")]
+        )
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -86184,669 +86245,597 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal-body",
-        staticStyle: { "margin-top": "-16px", "padding-bottom": "0px" }
-      },
-      [
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    staticClass: "cel-upleft",
-                    staticStyle: { color: "rgb(31,163,73)" }
-                  },
-                  [_vm._v("Garanzie Ospedaliere")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max.")]
-                )
-              ])
-            ]),
+    return _c("div", { staticClass: "table-responsive table-liqui" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", [
+          _c("tr", [
+            _c(
+              "th",
+              {
+                staticClass: "cel-upleft",
+                staticStyle: { color: "rgb(31,163,73)" }
+              },
+              [_vm._v("Garanzie Ospedaliere")]
+            ),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Ricovero con/senza intervento chirurgico")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("75.000"), _c("strong", [_vm._v("€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Grandi interventi chiurgici")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("100.000"), _c("strong", [_vm._v("€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Parto naturale /parto cesareo-aborto")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("2.000/4.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Laser ed eccimeri (per occhio)")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("1.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Interventi ambulatoriali")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("1.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("No limite retta di degenza")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Spese pre e post")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("gg. 90/90")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Condizioni in network")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("Senza franchigia e scoperti")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Condizioni fuori network")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("Scoperto 10% min.1500€ max.3000€")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("Degenza Sostitutiva")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("75€ per 90gg")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Alta Diagnostica")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("3.000€ 20% scoperto, ")]),
-                    _c("br"),
-                    _c("strong", [_vm._v("50€ min.")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Visite ed accertamenti")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("2.000€ 20% scoperto, ")]),
-                    _c("br"),
-                    _c("strong", [_vm._v("50€ min.")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Lenti e occhiali")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [
-                      _vm._v("150€ "),
-                      _c("em", [_vm._v("franchigia 50")])
-                    ]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Long Term Care")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("30.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Rimborso ticket")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("500€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: {
-                      "font-weight": "bold",
-                      "font-size": "12px",
-                      color: "rgb(31,163,37)"
-                    },
-                    attrs: { colspan: "3" }
-                  },
-                  [_vm._v("Garanzie sempre Operanti")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Assistenza superstiti")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("1.500€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Assistenza perdita impiego")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("em", [_vm._v("Esonero versamento max. 6 mesi")])]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Home test")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("1 / 2")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Strumentazione ausiliaria")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_vm._v("Misuratore pressione da braccio")]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("Check-up")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("Servizi Assistenza H24")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ])
-            ])
+            _c(
+              "th",
+              {
+                staticStyle: {
+                  "font-family": "Montserrat, sans-serif",
+                  "font-weight": "bold",
+                  color: "rgb(234,83,18)"
+                }
+              },
+              [_vm._v("max.")]
+            )
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c("th", { staticClass: "cel-upleft" }, [
-                  _vm._v("Capitale accumulato rivalutato")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max."), _c("br")]
-                )
-              ])
+        _c("tbody", [
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Ricovero con/senza intervento chirurgico")
             ]),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 15 anni")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("16.520€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 20 anni")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("28.013€")]), _c("br")]
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    staticClass: "cel-upleft",
-                    staticStyle: { color: "#f68c1f" }
-                  },
-                  [_vm._v("Polizza Infortuni")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max."), _c("br")]
-                )
-              ])
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("75.000"), _c("strong", [_vm._v("€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Grandi interventi chiurgici")
             ]),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Premorienza infortuni")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_vm._v("150.000"), _c("strong", [_vm._v("€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Invalidità Permanente")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("150.000€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("Indennità giornaliera ricovero/gesso")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [_c("strong", [_vm._v("40€")]), _c("br")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [_vm._v("Assistenza")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass:
-                      "justify-content-center align-items-center align-content-center align-self-center coliqui",
-                    staticStyle: { "font-weight": "bold", "padding-top": "3px" }
-                  },
-                  [
-                    _c("br"),
-                    _c("i", {
-                      staticClass: "fa fa-check justify-content-center",
-                      staticStyle: {
-                        "font-size": "13px",
-                        color: "rgb(21,173,36)"
-                      }
-                    })
-                  ]
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-responsive table-liqui" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c(
-                  "th",
-                  {
-                    staticClass: "cel-upleft",
-                    staticStyle: { color: "#dcbb0f" }
-                  },
-                  [_vm._v("Garanzie sempre operanti")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticStyle: {
-                      "font-family": "Montserrat, sans-serif",
-                      "font-weight": "bold",
-                      color: "rgb(234,83,18)"
-                    }
-                  },
-                  [_vm._v("max."), _c("br")]
-                )
-              ])
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("100.000"), _c("strong", [_vm._v("€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Parto naturale /parto cesareo-aborto")
             ]),
             _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v("TCM (Premorienza)")
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("2.000/4.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Laser ed eccimeri (per occhio)")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("1.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Interventi ambulatoriali")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("1.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("No limite retta di degenza")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Spese pre e post")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("gg. 90/90")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Condizioni in network")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("Senza franchigia e scoperti")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Condizioni fuori network")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("Scoperto 10% min.1500€ max.3000€")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("Degenza Sostitutiva")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("75€ per 90gg")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Alta Diagnostica")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("3.000€ 20% scoperto, ")]),
+                _c("br"),
+                _c("strong", [_vm._v("50€ min.")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Visite ed accertamenti")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("2.000€ 20% scoperto, ")]),
+                _c("br"),
+                _c("strong", [_vm._v("50€ min.")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Lenti e occhiali")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [
+                  _vm._v("150€ "),
+                  _c("em", [_vm._v("franchigia 50")])
                 ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_c("div", { staticClass: "vitru60" })]),
-                    _c("br")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "coliqui" }, [
-                  _vm._v(
-                    "Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)"
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "coliqui",
-                    staticStyle: { "font-weight": "bold" }
-                  },
-                  [
-                    _c("strong", [_c("div", { staticClass: "vitru60" })]),
-                    _c("br")
-                  ]
-                )
-              ])
-            ])
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Long Term Care")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("30.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Rimborso ticket")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("500€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: {
+                  "font-weight": "bold",
+                  "font-size": "12px",
+                  color: "rgb(31,163,37)"
+                },
+                attrs: { colspan: "3" }
+              },
+              [_vm._v("Garanzie sempre Operanti")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Assistenza superstiti")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("1.500€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Assistenza perdita impiego")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("em", [_vm._v("Esonero versamento max. 6 mesi")])]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Home test")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("1 / 2")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Strumentazione ausiliaria")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [
+                _c("strong", [_vm._v("Misuratore pressione da braccio")]),
+                _c("br")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("Check-up")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("Servizi Assistenza H24")]
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
           ])
         ])
-      ]
-    )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table-responsive table-liqui" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", [
+          _c("tr", [
+            _c("th", { staticClass: "cel-upleft" }, [
+              _vm._v("Capitale accumulato rivalutato")
+            ]),
+            _vm._v(" "),
+            _c(
+              "th",
+              {
+                staticStyle: {
+                  "font-family": "Montserrat, sans-serif",
+                  "font-weight": "bold",
+                  color: "rgb(234,83,18)"
+                }
+              },
+              [_vm._v("max."), _c("br")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tbody", [
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 15 anni")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("16.520€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Dopo 20 anni")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("28.013€")]), _c("br")]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table-responsive table-liqui" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", [
+          _c("tr", [
+            _c(
+              "th",
+              { staticClass: "cel-upleft", staticStyle: { color: "#f68c1f" } },
+              [_vm._v("Polizza Infortuni")]
+            ),
+            _vm._v(" "),
+            _c(
+              "th",
+              {
+                staticStyle: {
+                  "font-family": "Montserrat, sans-serif",
+                  "font-weight": "bold",
+                  color: "rgb(234,83,18)"
+                }
+              },
+              [_vm._v("max."), _c("br")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tbody", [
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Premorienza infortuni")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_vm._v("150.000"), _c("strong", [_vm._v("€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Invalidità Permanente")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("150.000€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [
+              _vm._v("Indennità giornaliera ricovero/gesso")
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass: "coliqui",
+                staticStyle: { "font-weight": "bold" }
+              },
+              [_c("strong", [_vm._v("40€")]), _c("br")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", { staticClass: "coliqui" }, [_vm._v("Assistenza")]),
+            _vm._v(" "),
+            _c(
+              "td",
+              {
+                staticClass:
+                  "justify-content-center align-items-center align-content-center align-self-center coliqui",
+                staticStyle: { "font-weight": "bold", "padding-top": "3px" }
+              },
+              [
+                _c("br"),
+                _c("i", {
+                  staticClass: "fa fa-check justify-content-center",
+                  staticStyle: { "font-size": "13px", color: "rgb(21,173,36)" }
+                })
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c(
+          "th",
+          { staticClass: "cel-upleft", staticStyle: { color: "#dcbb0f" } },
+          [_vm._v("Garanzie sempre operanti")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: {
+              "font-family": "Montserrat, sans-serif",
+              "font-weight": "bold",
+              color: "rgb(234,83,18)"
+            }
+          },
+          [_vm._v("max."), _c("br")]
+        )
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -90165,7 +90154,7 @@ var staticRenderFns = [
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "row mt-3 mb-3" }, [
           _c("div", { staticClass: "col d-flex justify-content-center" }, [
             _c(
               "button",
@@ -90174,7 +90163,7 @@ var staticRenderFns = [
                 staticStyle: {
                   "font-style": "italic",
                   "font-family": "Montserrat, sans-serif",
-                  "font-size": "12px",
+                  "font-size": "18px !important",
                   "margin-top": "-11px"
                 },
                 attrs: {
@@ -90442,376 +90431,6 @@ if (false) {
 
 /***/ }),
 /* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "form-wizard",
-    {
-      ref: "formWizard",
-      attrs: { shape: "circle", color: "#e67e22", title: "", subtitle: "" },
-      on: { "on-complete": _vm.onComplete },
-      scopedSlots: _vm._u([
-        {
-          key: "footer",
-          fn: function(props) {
-            return [
-              _c(
-                "div",
-                { staticClass: "wizard-footer-left" },
-                [
-                  props.activeTabIndex > 0 && !props.isLastStep
-                    ? _c(
-                        "wizard-button",
-                        {
-                          style: props.fillButtonStyle,
-                          nativeOn: {
-                            click: function($event) {
-                              props.prevTab()
-                            }
-                          }
-                        },
-                        [_vm._v("Previous")]
-                      )
-                    : _vm._e()
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "wizard-footer-right" },
-                [
-                  !props.isLastStep && props.activeTabIndex != 2
-                    ? _c(
-                        "wizard-button",
-                        {
-                          staticClass: "wizard-footer-right",
-                          style: props.fillButtonStyle,
-                          nativeOn: {
-                            click: function($event) {
-                              props.nextTab()
-                            }
-                          }
-                        },
-                        [_vm._v("Next")]
-                      )
-                    : props.isLastStep
-                      ? _c(
-                          "wizard-button",
-                          {
-                            staticClass: "wizard-footer-right finish-button",
-                            style: props.fillButtonStyle,
-                            nativeOn: {
-                              click: function($event) {
-                                return _vm.finishSteps($event)
-                              }
-                            }
-                          },
-                          [_vm._v("Done")]
-                        )
-                      : _vm._e()
-                ],
-                1
-              )
-            ]
-          }
-        }
-      ])
-    },
-    [
-      _c("h2", { attrs: { slot: "title" }, slot: "title" }, [
-        _c("img", {
-          staticClass: "register_step_logo",
-          attrs: { src: "assets/img/Assiqura_Logo.png" }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "tab-content",
-        {
-          attrs: {
-            title: "l'età ",
-            icon: "ti-user",
-            "before-change": _vm.ageStepValidate
-          }
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass:
-                "container justify-content-center align-items-center align-content-center align-self-center",
-              staticStyle: {
-                "background-image":
-                  'url("assets/img/team-motivation-teamwork-together-53958.jpeg")',
-                "background-position": "center",
-                "background-size": "cover",
-                "background-repeat": "no-repeat"
-              },
-              attrs: { id: "app-head" }
-            },
-            [
-              _c(
-                "h4",
-                {
-                  staticClass: "text-center text-head",
-                  staticStyle: {
-                    "font-family": "Montserrat, sans-serif",
-                    "font-style": "normal",
-                    "font-weight": "bold",
-                    "font-size": "15px",
-                    "padding-top": "21px",
-                    color: "rgb(230,230,230)"
-                  }
-                },
-                [_vm._v("Ognuno di noi ha tante cose a cui tiene,"), _c("br")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "row text-center" }, [
-                _c("img", {
-                  staticStyle: { width: "50px", margin: "0 auto" },
-                  attrs: {
-                    src: "assets/img/LogoneBlalloNice.png",
-                    id: "center-img-head"
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "h4",
-                {
-                  staticClass: "text-center text-head",
-                  staticStyle: {
-                    "font-weight": "bold",
-                    "font-family": "Montserrat, sans-serif",
-                    "font-size": "16px",
-                    color: "rgb(255,255,255)",
-                    "padding-top": "-36px"
-                  }
-                },
-                [_vm._v("proteggile tutte con un unica soluzione."), _c("br")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "container" }, [
-            _c(
-              "p",
-              {
-                staticClass: "para-data",
-                staticStyle: { color: "rgba(33,37,41,0.84)" }
-              },
-              [
-                _vm._v(
-                  "Scegli il prodotto più completo che garantisca Tutela e Risparmio. "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("p", { staticClass: "para-data data-calco" }, [
-              _vm._v("Inserisci letà e ottieni la tua soluzione")
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "age-wrapper" },
-              [
-                _c("NumberInputSpinner", {
-                  attrs: { min: 18, max: 59 },
-                  model: {
-                    value: _vm.form.age,
-                    callback: function($$v) {
-                      _vm.$set(_vm.form, "age", $$v)
-                    },
-                    expression: "form.age"
-                  }
-                })
-              ],
-              1
-            )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "tab-content",
-        { attrs: { title: "protezioni", icon: "ti-hand-point-right" } },
-        [_c("explanation-step")],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "tab-content",
-        { attrs: { title: "Pacchetto", icon: "ti-money" } },
-        [
-          _c("SelectPackageStep", {
-            on: { selectPackageHandler: _vm.onSelectPackage }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "tab-content",
-        { attrs: { title: "Informazione", icon: "ti-info" } },
-        [_c("PersonalInfoStep", { ref: "personalInfoStep" })],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3a879a6d", module.exports)
-  }
-}
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 95 */,
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Vue Cookies v1.5.7
- * https://github.com/cmp-cc/vue-cookies
- *
- * Copyright 2016, cmp-cc
- * Released under the MIT license
- */
-
-(function() {
-
-    var defaultConfig = {
-        expires : '1d',
-        path : '; path=/'
-    }
-
-    var VueCookies = {
-        // install of Vue
-        install: function(Vue) {
-            Vue.prototype.$cookies = this
-            Vue.cookies = this
-        },
-        config : function(expireTimes,path) {
-            if(expireTimes) {
-                defaultConfig.expires = expireTimes;
-            }
-            if(path === '') {
-                defaultConfig.path = '';
-            }else {
-                defaultConfig.path = '; path=' + path;
-            }
-        },
-        get: function(key) {
-            var value = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
-
-            if(value && value.startsWith("{") && value.endsWith("}")) {
-                try {
-                    value = JSON.parse(value)
-                }catch (e) {
-                    return value;
-                }
-            }
-            return value;
-        },
-        set: function(key, value, expireTimes, path, domain, secure) {
-            if (!key) {
-                throw new Error("cookie name is not find in first argument")
-            }else if(/^(?:expires|max\-age|path|domain|secure)$/i.test(key)){
-                throw new Error("cookie key name illegality ,Cannot be set to ['expires','max-age','path','domain','secure']\t","current key name: "+key);
-            }
-            // support json object
-            if(value && value.constructor === Object ) {
-                value = JSON.stringify(value);
-            }
-            var _expires = "; max-age=86400"; // temp value, default expire time for 1 day
-            expireTimes = expireTimes || defaultConfig.expires;
-            if (expireTimes) {
-                switch (expireTimes.constructor) {
-                    case Number:
-                        if(expireTimes === Infinity || expireTimes === -1) _expires = "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-                        else _expires = "; max-age=" + expireTimes;
-                        break;
-                    case String:
-                        if (/^(?:\d{1,}(y|m|d|h|min|s))$/i.test(expireTimes)) {
-                            // get capture number group
-                            var _expireTime = expireTimes.replace(/^(\d{1,})(?:y|m|d|h|min|s)$/i, "$1");
-                            // get capture type group , to lower case
-                            switch (expireTimes.replace(/^(?:\d{1,})(y|m|d|h|min|s)$/i, "$1").toLowerCase()) {
-                                // Frequency sorting
-                                case 'm':  _expires = "; max-age=" + +_expireTime * 2592000; break; // 60 * 60 * 24 * 30
-                                case 'd':  _expires = "; max-age=" + +_expireTime * 86400; break; // 60 * 60 * 24
-                                case 'h': _expires = "; max-age=" + +_expireTime * 3600; break; // 60 * 60
-                                case 'min':  _expires = "; max-age=" + +_expireTime * 60; break; // 60
-                                case 's': _expires = "; max-age=" + _expireTime; break;
-                                case 'y': _expires = "; max-age=" + +_expireTime * 31104000; break; // 60 * 60 * 24 * 30 * 12
-                                default: new Error("unknown exception of 'set operation'");
-                            }
-                        } else {
-                            _expires = "; expires=" + expireTimes;
-                        }
-                        break;
-                    case Date:
-                        _expires = "; expires=" + expireTimes.toUTCString();
-                        break;
-                }
-            }
-            document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path) + (secure ? "; secure" : "");
-            return this;
-        },
-        remove: function(key, path, domain) {
-            if (!key || !this.isKey(key)) {
-                return false;
-            }
-            document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path);
-            return this;
-        },
-        isKey: function(key) {
-            return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
-        },
-        keys:  function() {
-            if(!document.cookie) return [];
-            var _keys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-            for (var _index = 0; _index < _keys.length; _index++) {
-                _keys[_index] = decodeURIComponent(_keys[_index]);
-            }
-            return _keys;
-        }
-    }
-
-    if (true) {
-        module.exports = VueCookies;
-    } else if (typeof define == "function" && define.amd) {
-        define([], function() {
-            return VueCookies;
-        })
-    } else if (window.Vue) {
-        Vue.use(VueCookies);
-    }
-    // vue-cookies can exist independently,no dependencies library
-    if(typeof window!=="undefined"){
-        window.$cookies = VueCookies;
-    }
-
-})()
-
-/***/ }),
-/* 97 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -93439,6 +93058,376 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ __webpack_exports__["a"] = (VueRouter);
 
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Vue Cookies v1.5.7
+ * https://github.com/cmp-cc/vue-cookies
+ *
+ * Copyright 2016, cmp-cc
+ * Released under the MIT license
+ */
+
+(function() {
+
+    var defaultConfig = {
+        expires : '1d',
+        path : '; path=/'
+    }
+
+    var VueCookies = {
+        // install of Vue
+        install: function(Vue) {
+            Vue.prototype.$cookies = this
+            Vue.cookies = this
+        },
+        config : function(expireTimes,path) {
+            if(expireTimes) {
+                defaultConfig.expires = expireTimes;
+            }
+            if(path === '') {
+                defaultConfig.path = '';
+            }else {
+                defaultConfig.path = '; path=' + path;
+            }
+        },
+        get: function(key) {
+            var value = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
+
+            if(value && value.startsWith("{") && value.endsWith("}")) {
+                try {
+                    value = JSON.parse(value)
+                }catch (e) {
+                    return value;
+                }
+            }
+            return value;
+        },
+        set: function(key, value, expireTimes, path, domain, secure) {
+            if (!key) {
+                throw new Error("cookie name is not find in first argument")
+            }else if(/^(?:expires|max\-age|path|domain|secure)$/i.test(key)){
+                throw new Error("cookie key name illegality ,Cannot be set to ['expires','max-age','path','domain','secure']\t","current key name: "+key);
+            }
+            // support json object
+            if(value && value.constructor === Object ) {
+                value = JSON.stringify(value);
+            }
+            var _expires = "; max-age=86400"; // temp value, default expire time for 1 day
+            expireTimes = expireTimes || defaultConfig.expires;
+            if (expireTimes) {
+                switch (expireTimes.constructor) {
+                    case Number:
+                        if(expireTimes === Infinity || expireTimes === -1) _expires = "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+                        else _expires = "; max-age=" + expireTimes;
+                        break;
+                    case String:
+                        if (/^(?:\d{1,}(y|m|d|h|min|s))$/i.test(expireTimes)) {
+                            // get capture number group
+                            var _expireTime = expireTimes.replace(/^(\d{1,})(?:y|m|d|h|min|s)$/i, "$1");
+                            // get capture type group , to lower case
+                            switch (expireTimes.replace(/^(?:\d{1,})(y|m|d|h|min|s)$/i, "$1").toLowerCase()) {
+                                // Frequency sorting
+                                case 'm':  _expires = "; max-age=" + +_expireTime * 2592000; break; // 60 * 60 * 24 * 30
+                                case 'd':  _expires = "; max-age=" + +_expireTime * 86400; break; // 60 * 60 * 24
+                                case 'h': _expires = "; max-age=" + +_expireTime * 3600; break; // 60 * 60
+                                case 'min':  _expires = "; max-age=" + +_expireTime * 60; break; // 60
+                                case 's': _expires = "; max-age=" + _expireTime; break;
+                                case 'y': _expires = "; max-age=" + +_expireTime * 31104000; break; // 60 * 60 * 24 * 30 * 12
+                                default: new Error("unknown exception of 'set operation'");
+                            }
+                        } else {
+                            _expires = "; expires=" + expireTimes;
+                        }
+                        break;
+                    case Date:
+                        _expires = "; expires=" + expireTimes.toUTCString();
+                        break;
+                }
+            }
+            document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path) + (secure ? "; secure" : "");
+            return this;
+        },
+        remove: function(key, path, domain) {
+            if (!key || !this.isKey(key)) {
+                return false;
+            }
+            document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path);
+            return this;
+        },
+        isKey: function(key) {
+            return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+        },
+        keys:  function() {
+            if(!document.cookie) return [];
+            var _keys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+            for (var _index = 0; _index < _keys.length; _index++) {
+                _keys[_index] = decodeURIComponent(_keys[_index]);
+            }
+            return _keys;
+        }
+    }
+
+    if (true) {
+        module.exports = VueCookies;
+    } else if (typeof define == "function" && define.amd) {
+        define([], function() {
+            return VueCookies;
+        })
+    } else if (window.Vue) {
+        Vue.use(VueCookies);
+    }
+    // vue-cookies can exist independently,no dependencies library
+    if(typeof window!=="undefined"){
+        window.$cookies = VueCookies;
+    }
+
+})()
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form-wizard",
+    {
+      ref: "formWizard",
+      attrs: { shape: "circle", color: "#e67e22", title: "", subtitle: "" },
+      on: { "on-complete": _vm.onComplete },
+      scopedSlots: _vm._u([
+        {
+          key: "footer",
+          fn: function(props) {
+            return [
+              _c(
+                "div",
+                { staticClass: "wizard-footer-left" },
+                [
+                  props.activeTabIndex > 0 && !props.isLastStep
+                    ? _c(
+                        "wizard-button",
+                        {
+                          style: props.fillButtonStyle,
+                          nativeOn: {
+                            click: function($event) {
+                              props.prevTab()
+                            }
+                          }
+                        },
+                        [_vm._v("Indietro")]
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "wizard-footer-right" },
+                [
+                  !props.isLastStep && props.activeTabIndex != 2
+                    ? _c(
+                        "wizard-button",
+                        {
+                          staticClass: "wizard-footer-right",
+                          style: props.fillButtonStyle,
+                          nativeOn: {
+                            click: function($event) {
+                              props.nextTab()
+                            }
+                          }
+                        },
+                        [_vm._v("Avvanti")]
+                      )
+                    : props.isLastStep
+                      ? _c(
+                          "wizard-button",
+                          {
+                            staticClass: "wizard-footer-right finish-button",
+                            style: props.fillButtonStyle,
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.finishSteps($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Finire")]
+                        )
+                      : _vm._e()
+                ],
+                1
+              )
+            ]
+          }
+        }
+      ])
+    },
+    [
+      _c("h2", { attrs: { slot: "title" }, slot: "title" }, [
+        _c("img", {
+          staticClass: "register_step_logo",
+          attrs: { src: "assets/img/Assiqura_Logo.png" }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "tab-content",
+        {
+          attrs: {
+            title: "l'età ",
+            icon: "ti-user",
+            "before-change": _vm.ageStepValidate
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "container justify-content-center align-items-center align-content-center align-self-center",
+              staticStyle: {
+                "background-image":
+                  'url("assets/img/team-motivation-teamwork-together-53958.jpeg")',
+                "background-position": "center",
+                "background-size": "cover",
+                "background-repeat": "no-repeat"
+              },
+              attrs: { id: "app-head" }
+            },
+            [
+              _c(
+                "h4",
+                {
+                  staticClass: "text-center text-head",
+                  staticStyle: {
+                    "font-family": "Montserrat, sans-serif",
+                    "font-style": "normal",
+                    "font-weight": "bold",
+                    "font-size": "15px",
+                    "padding-top": "21px",
+                    color: "rgb(230,230,230)"
+                  }
+                },
+                [_vm._v("Ognuno di noi ha tante cose a cui tiene,"), _c("br")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "row text-center" }, [
+                _c("img", {
+                  staticStyle: { width: "50px", margin: "0 auto" },
+                  attrs: {
+                    src: "assets/img/LogoneBlalloNice.png",
+                    id: "center-img-head"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "h4",
+                {
+                  staticClass: "text-center text-head",
+                  staticStyle: {
+                    "font-weight": "bold",
+                    "font-family": "Montserrat, sans-serif",
+                    "font-size": "16px",
+                    color: "rgb(255,255,255)",
+                    "padding-top": "-36px"
+                  }
+                },
+                [_vm._v("proteggile tutte con un unica soluzione."), _c("br")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "container" }, [
+            _c(
+              "p",
+              {
+                staticClass: "para-data",
+                staticStyle: { color: "rgba(33,37,41,0.84)" }
+              },
+              [
+                _vm._v(
+                  "Scegli il prodotto più completo che garantisca Tutela e Risparmio. "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "para-data data-calco" }, [
+              _vm._v("Inserisci l'età e ottieni la tua soluzione")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "age-wrapper" },
+              [
+                _c("NumberInputSpinner", {
+                  attrs: { min: 18, max: 59 },
+                  model: {
+                    value: _vm.form.age,
+                    callback: function($$v) {
+                      _vm.$set(_vm.form, "age", $$v)
+                    },
+                    expression: "form.age"
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "tab-content",
+        { attrs: { title: "protezioni", icon: "ti-hand-point-right" } },
+        [_c("explanation-step")],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "tab-content",
+        { attrs: { title: "Pacchetto", icon: "ti-money" } },
+        [
+          _c("SelectPackageStep", {
+            ref: "selectPackageStep",
+            on: { selectPackageHandler: _vm.onSelectPackage }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "tab-content",
+        { attrs: { title: "Informazione", icon: "ti-info" } },
+        [_c("PersonalInfoStep", { ref: "personalInfoStep" })],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3a879a6d", module.exports)
+  }
+}
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

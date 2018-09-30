@@ -22,7 +22,7 @@ class SaleRepository extends BaseRepository
     protected $fieldSearchable = [
         'age',
         'packageType',
-        'agePrice',
+        'price',
         'contractorType',
         'contractorFirstName',
         'contractorLastName',

@@ -46,20 +46,51 @@
                             <!-- User Account Menu -->
                             <li class="dropdown user user-menu">
                                 <!-- Menu Toggle Button -->
-                                @if(Auth::check())
-                                <a href = "{{ url('/admin/sales') }}" class="dropdown-toggle">
-                                @else
-                                <a href = "{{ url('/login') }}" class="dropdown-toggle">
-                                @endif
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <!-- The user image in the navbar-->
-                                    <img src="../../assets/img/avatar.png"
-                                         class="user-image" alt="User Image"/>
+                                    <img src="../../../../../../assets/img/avatar.png"
+                                            class="user-image" alt="User Image"/>
                                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                     @if(Auth::check())
-                                    <span class="hidden-xs">{!! Auth::user()->first_name !!}</span>
+                                    <span class="hidden-xs header-user-name">{!! Auth::user()->first_name !!}</span>
                                     @endif
                                 </a>
-
+                                <ul class="dropdown-menu">
+                                    <!-- The user image in the menu -->
+                                    <li class="user-header">
+                                        <img src="../../../../../../assets/img/avatar.png"
+                                                class="img-circle" alt="User Image"/>
+                                        @if(Auth::check())
+                                        <p>
+                                            {!! Auth::user()->name !!}
+                                            <small>Member since {!! Auth::user()->created_at->format('M. Y') !!}</small>
+                                        </p>
+                                        @endif
+                                    </li>
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            @if(Auth::check())
+                                            <a href="{{ url('/admin/sales/') }}" class="btn btn-default btn-flat">Sales Table</a>
+                                            @endif
+                                        </div>
+                                        <div class="pull-right">
+                                            @if(Auth::check())
+                                                <a href="{!! url('/logout') !!}" class="btn btn-default btn-flat"
+                                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    Sign out
+                                                </a>
+                                            @else
+                                                <a href="{!! url('/login') !!}" class="btn btn-default btn-flat">
+                                                Login
+                                                </a>
+                                            @endif
+                                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

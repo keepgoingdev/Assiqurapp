@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1 class="pull-left">Sales</h1>
+        <h1 class="pull-left">Vendite</h1>
     </section>
     <div class="content">
         <div class="clearfix"></div>

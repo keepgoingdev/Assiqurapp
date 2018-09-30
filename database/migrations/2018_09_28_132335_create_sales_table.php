@@ -17,7 +17,7 @@ class CreateSalesTable extends Migration
             $table->increments('id');
             $table->integer('age');
             $table->integer('packageType');
-            $table->integer('agePrice');
+            $table->integer('price');
             $table->integer('seller_id');
 
             $table->string('contractorType');

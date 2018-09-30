@@ -13,8 +13,8 @@
                 <p id="termine-titolo">Prima di fornirci i Suoi Dati personali attraverso il Form, La preghiamo di leggere la presente Informativa.<br></p>
             </div>
         </div>
-        <div class="row">
-            <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style="font-style:italic;font-family:Montserrat, sans-serif;font-size:12px;margin-top:-11px;" data-toggle="modal" data-target="#trattamento-dati">Consulta</button></div>
+        <div class="row mt-3 mb-3">
+            <div class="col d-flex justify-content-center"><button class="btn btn-primary" type="button" style="font-style:italic;font-family:Montserrat, sans-serif;    font-size: 18px !important;margin-top:-11px;" data-toggle="modal" data-target="#trattamento-dati">Consulta</button></div>
         </div>
     </div>
 

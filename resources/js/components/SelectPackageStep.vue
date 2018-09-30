@@ -182,17 +182,17 @@
                                     <tbody>
                                         <tr>
                                             <td class="coliqui">TCM (Premorienza)</td>
-                                            <td class="coliqui" style="font-weight:bold;"><strong><div class="vitru30"></div></strong></td>
+                                            <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice + "€" }}</div></strong></td>
                                         </tr>
                                         <tr>
                                             <td class="coliqui">Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)</td>
-                                            <td class="coliqui" style="font-weight:bold;"><strong><div class="vitru30"></div></strong></td>
+                                            <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice + "€" }}</div></strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" v-on:click = "onSelectPackage(130)" data-dismiss="modal">AVANTI</button></div>
+                        <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" v-on:click = "onSelectPackage(1)" data-dismiss="modal">AVANTI</button></div>
                     </div>
                 </div>
             </div>
@@ -360,17 +360,17 @@
                                 <tbody>
                                     <tr>
                                         <td class="coliqui">TCM (Premorienza)</td>
-                                        <td class="coliqui" style="font-weight:bold;"><strong><div class="vitru60"></div></strong><br></td>
+                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice * 2 + "€" }}</div></strong><br></td>
                                     </tr>
                                     <tr>
                                         <td class="coliqui">Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)</td>
-                                        <td class="coliqui" style="font-weight:bold;"><strong><div class="vitru60"></div></strong><br></td>
+                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice * 2 + "€" }}</div></strong><br></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" v-on:click = "onSelectPackage(190)" data-dismiss="modal">AVANTI</button></div>
+                    <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" v-on:click = "onSelectPackage(2)" data-dismiss="modal">AVANTI</button></div>
                 </div>
             </div>
         </div>
@@ -538,17 +538,17 @@
                                 <tbody>
                                     <tr>
                                         <td class="coliqui">TCM (Premorienza)</td>
-                                        <td class="coliqui" style="font-weight:bold;"><strong><div class="vitru60"></div></strong><br></td>
+                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice * 3 + "€" }}</div></strong><br></td>
                                     </tr>
                                     <tr>
                                         <td class="coliqui">Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)</td>
-                                        <td class="coliqui" style="font-weight:bold;"><strong><div class="vitru60"></div></strong><br></td>
+                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice * 3 + "€" }}</div></strong><br></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" v-on:click = "onSelectPackage(300)" data-dismiss="modal">AVANTI</button></div>
+                    <div class="modal-footer footer-liqui"><button class="btn btn-primary" type="button" v-on:click = "onSelectPackage(3)" data-dismiss="modal">AVANTI</button></div>
                 </div>
             </div>
         </div>
@@ -558,10 +558,22 @@
 <script>
 export default {
     methods: {
-        onSelectPackage: function (price) {
-            this.$emit('selectPackageHandler', price);
+        onSelectPackage: function (type) {
+            let price = 0;
+            if(type == 1)
+                price = this.agePrice;
+            else if(type == 2)
+                price = this.agePrice * 2;
+            else if(type == 3)
+                price = this.agePrice * 3;
+            this.$emit('selectPackageHandler', price, type);
         }
-    }
+    },
+    data: ()=>{
+            return {
+            agePrice: 0
+            }
+          }
 }
 </script>
 

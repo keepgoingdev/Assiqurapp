@@ -26,6 +26,8 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
+    <link rel="stylesheet" href="../../../assets/css/styles.min.css">
+
     @yield('css')
 </head>
 
@@ -34,14 +36,9 @@
     <div class="wrapper">
         <!-- Main Header -->
         <header class="main-header">
-
-            <!-- Logo -->
-            <a href="#" class="logo">
-                <b>Assiqurapp</b>
-            </a>
-
             <!-- Header Navbar -->
-            <nav class="navbar navbar-static-top" role="navigation">
+            <nav class="navbar navbar-static-top" role="navigation" style = "margin-left:0px">
+                <img class = "logo-image" src = "../../../../assets/img/Assiqura_Logo.png" />
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">

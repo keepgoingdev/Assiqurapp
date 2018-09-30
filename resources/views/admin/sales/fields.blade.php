@@ -11,15 +11,17 @@
 </div>
 
 <!-- Packagetype Field -->
+<!--
 <div class="form-group col-sm-6">
     {!! Form::label('packageType', 'Packagetype:') !!}
     {!! Form::number('packageType', null, ['class' => 'form-control']) !!}
 </div>
+-->
 
-<!-- Ageprice Field -->
+<!-- Price Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('agePrice', 'Ageprice:') !!}
-    {!! Form::number('agePrice', null, ['class' => 'form-control']) !!}
+    {!! Form::label('price', 'Price:') !!}
+    {!! Form::number('price', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Contractortype Field -->
@@ -192,6 +194,6 @@
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('admin.sales.index') !!}" class="btn btn-default">Cancel</a>
+    {!! Form::submit('Salvare', ['class' => 'btn btn-primary']) !!}
+    <a href="{!! route('admin.sales.index') !!}" class="btn btn-default">Annulla</a>
 </div>

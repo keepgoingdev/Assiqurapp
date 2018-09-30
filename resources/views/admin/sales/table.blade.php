@@ -3,8 +3,8 @@
         <tr>
         <th>Seller ID</th>
         <th>Age</th>
-        <th>Packagetype</th>
-        <th>Ageprice</th>
+        <!--<th>Packagetype</th>-->
+        <th>Price</th>
         <th>Contractortype</th>
         <th>Contractorfirstname</th>
         <th>Contractorlastname</th>
@@ -42,8 +42,8 @@
         <tr>
             <td>{!! $sale->seller_id !!}</td>
             <td>{!! $sale->age !!}</td>
-            <td>{!! $sale->packageType !!}</td>
-            <td>{!! $sale->agePrice !!}</td>
+            <!--<td>{!! $sale->packageType !!}</td>-->
+            <td>{!! $sale->price !!}</td>
             <td>{!! $sale->contractorType !!}</td>
             <td>{!! $sale->contractorFirstName !!}</td>
             <td>{!! $sale->contractorLastName !!}</td>
@@ -79,7 +79,7 @@
                 <div class='btn-group'>
                     <a href="{!! route('admin.sales.show', [$sale->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
                     <a href="{!! route('admin.sales.edit', [$sale->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Sei sicuro?')"]) !!}
                 </div>
                 {!! Form::close() !!}
             </td>
