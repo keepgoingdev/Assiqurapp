@@ -164,7 +164,8 @@ class UserController extends AppBaseController
         ]);
 
         $user = Auth::user();
-
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
         if(isset($request->password))
         {
             $user->password = bcrypt($request->password);
@@ -173,7 +174,6 @@ class UserController extends AppBaseController
         $user->save();
 
         // $user = $this->userRepository->update($request->all(), $id);
-
         Flash::success('User updated successfully.');
         return redirect(route('admin.users.profile'));
     }
