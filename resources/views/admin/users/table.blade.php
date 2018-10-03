@@ -5,7 +5,7 @@
             <th>Cognome</th>
             <th>Email</th>
             <!--<th>Role</th>-->
-            <th colspan="3">Action</th>
+            <th colspan="3">Azioni</th>
         </tr>
     </thead>
     <tbody>

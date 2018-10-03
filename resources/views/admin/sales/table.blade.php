@@ -36,7 +36,7 @@
         <th>Beneficiario Caso Morte Telefono</th>
 
         <th>Receiveemail</th>-->
-        <th colspan="3">Action</th>
+        <th colspan="3">Azioni</th>
         </tr>
     </thead>
     <tbody>
