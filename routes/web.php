@@ -5,9 +5,6 @@ Route::get('/', 'RegisterSaleController@index');
 Route::post('/register_sale', ['as'=> 'register_sale', 'uses' => 'RegisterSaleController@register_sale']);
 
 Route::group(['middleware' => ['auth']], function () {
-});
-
-Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/users/profile', ['as'=> 'admin.users.profile', 'uses' => 'Admin\UserController@profile']);
     Route::patch('admin/users/update_profile', ['as'=> 'admin.users.update_profile', 'uses' => 'Admin\UserController@update_profile']);
     Route::get('admin/sales', ['as'=> 'admin.sales.index', 'uses' => 'Admin\SaleController@index']);
@@ -17,6 +14,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('admin/sales/{sales}', ['as'=> 'admin.sales.destroy', 'uses' => 'Admin\SaleController@destroy']);
     Route::get('admin/sales/{sales}', ['as'=> 'admin.sales.show', 'uses' => 'Admin\SaleController@show']);
     Route::get('admin/sales/{sales}/edit', ['as'=> 'admin.sales.edit', 'uses' => 'Admin\SaleController@edit']);
+    Route::get('/regSuccessfull', function () { return view('regSuccessfull', [] );
+    });
 });
 
 

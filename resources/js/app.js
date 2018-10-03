@@ -22,6 +22,7 @@ import 'vue-material/dist/theme/default.css'
 
 Vue.component('registersale', require('./components/RegisterSaleComponentTab.vue'));
 Vue.use('registersale');
+
 const app = new Vue({
     el: '#app'
 });

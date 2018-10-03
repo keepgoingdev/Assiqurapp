@@ -1,5 +1,5 @@
 <template>
-  <form-wizard ref="formWizard" @on-complete="onComplete" shape = "circle" color="#e67e22" title = "" subtitle = "">
+  <form-wizard v-if = "showWizard == true" ref="formWizard" @on-complete="onComplete" shape = "circle" color="#e67e22" title = "" subtitle = "">
        <h2 slot="title">
            <img class = "register_step_logo" src = "assets/img/Assiqura_Logo.png"/>
        </h2>
@@ -34,12 +34,11 @@
                     <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" @click.native="props.prevTab()" :style="props.fillButtonStyle">Indietro</wizard-button>
                     </div>
                     <div class="wizard-footer-right">
-                    <wizard-button v-if="!props.isLastStep && props.activeTabIndex != 2" @click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Avvanti</wizard-button>
-                    <wizard-button v-else-if="props.isLastStep" class="wizard-footer-right finish-button" @click.native="finishSteps" :style="props.fillButtonStyle">Finire</wizard-button>
+                    <wizard-button v-if="!props.isLastStep && props.activeTabIndex != 2" @click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Avanti</wizard-button>
+                    <wizard-button v-else-if="props.isLastStep" class="wizard-footer-right finish-button" @click.native="finishSteps" :style="props.fillButtonStyle">Inviare</wizard-button>
                 </div>
             </template>
         </form-wizard>
-
 </template>
 
 <script>
@@ -54,6 +53,10 @@
     Vue.use(require('vue-cookies'));
     Vue.use(VueRouter);
 
+    import 'v-slim-dialog/dist/v-slim-dialog.css'
+    import SlimDialog from 'v-slim-dialog'
+    Vue.use(SlimDialog)
+
     export default {
         props: ['logged_in'],
         components: {
@@ -62,10 +65,12 @@
             PersonalInfoStep,
             NumberInputSpinner,
             FormWizard,
-            TabContent
+            TabContent,
+            SlimDialog
         },
         data: ()=>{
             return {
+            showWizard: false,
             form :{
                 age: 18,
                 price: 0,
@@ -74,20 +79,34 @@
             },
           }
         },
-        mounted(){
+        beforeMount(){
             if(this.check_logged_in())
             {
                 let register_data = this.$cookies.get('register_data', this.form);
                 if(register_data != "null")
                 {
-                    this.send_register_request(register_data);
+                    this.send_register_request(register_data, (response) => {
+                        if(response.success)
+                            location.href = "/regSuccessfull";
+                        else
+                            this.showWizard = true;
+                    });
                 }
+                else
+                    this.showWizard = true;
             }
+            else
+                this.showWizard = true;
         },
         methods: {
             onComplete: function(){
                 if(this.check_logged_in())
-                    this.send_register_request(this.form);
+                {
+                    this.send_register_request(this.form, (response)=>{
+                        if(response.success)
+                            location.href = "/regSuccessfull";
+                    });
+                }
                 else
                 {
                     this.$cookies.set('register_data', this.form);
@@ -97,13 +116,12 @@
             check_logged_in: function(){
                 return this.logged_in == 1;
             },
-            send_register_request: function(form_values){
+            send_register_request: function(form_values, callback){
                 axios.post('/register_sale', form_values).then((response)=>{
                     if(response.data.success)
-                    {
-                        alert("New sale successfully registerd!");
-                        location.reload();
-                    }
+                        callback({success:true});
+                    else
+                        callback({success:false});
                 });
                 this.$cookies.set('register_data', null);
             }

@@ -25615,6 +25615,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_material___default.a);
 
 Vue.component('registersale', __webpack_require__(50));
 Vue.use('registersale');
+
 var app = new Vue({
   el: '#app'
 });
@@ -78484,7 +78485,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_router__ = __webpack_require__(93);
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_v_slim_dialog_dist_v_slim_dialog_css__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_v_slim_dialog_dist_v_slim_dialog_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_v_slim_dialog_dist_v_slim_dialog_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_v_slim_dialog__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_v_slim_dialog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_v_slim_dialog__);
 //
 //
 //
@@ -78540,6 +78544,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Vue.use(__webpack_require__(94));
 Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
 
+
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_7_v_slim_dialog___default.a);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['logged_in'],
     components: {
@@ -78548,10 +78556,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
         PersonalInfoStep: __WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue___default.a,
         NumberInputSpinner: __WEBPACK_IMPORTED_MODULE_1_vue_number_input_spinner___default.a,
         FormWizard: __WEBPACK_IMPORTED_MODULE_0_vue_form_wizard__["FormWizard"],
-        TabContent: __WEBPACK_IMPORTED_MODULE_0_vue_form_wizard__["TabContent"]
+        TabContent: __WEBPACK_IMPORTED_MODULE_0_vue_form_wizard__["TabContent"],
+        SlimDialog: __WEBPACK_IMPORTED_MODULE_7_v_slim_dialog___default.a
     },
     data: function data() {
         return {
+            showWizard: false,
             form: {
                 age: 18,
                 price: 0,
@@ -78560,18 +78570,26 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
             }
         };
     },
-    mounted: function mounted() {
+    beforeMount: function beforeMount() {
+        var _this = this;
+
         if (this.check_logged_in()) {
             var register_data = this.$cookies.get('register_data', this.form);
             if (register_data != "null") {
-                this.send_register_request(register_data);
-            }
-        }
+                this.send_register_request(register_data, function (response) {
+                    if (response.success) location.href = "/regSuccessfull";else _this.showWizard = true;
+                });
+            } else this.showWizard = true;
+        } else this.showWizard = true;
     },
 
     methods: {
         onComplete: function onComplete() {
-            if (this.check_logged_in()) this.send_register_request(this.form);else {
+            if (this.check_logged_in()) {
+                this.send_register_request(this.form, function (response) {
+                    if (response.success) location.href = "/regSuccessfull";
+                });
+            } else {
                 this.$cookies.set('register_data', this.form);
                 location.href = "/login";
             }
@@ -78579,12 +78597,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_router__["a" /* default */]);
         check_logged_in: function check_logged_in() {
             return this.logged_in == 1;
         },
-        send_register_request: function send_register_request(form_values) {
+        send_register_request: function send_register_request(form_values, callback) {
             axios.post('/register_sale', form_values).then(function (response) {
-                if (response.data.success) {
-                    alert("New sale successfully registerd!");
-                    location.reload();
-                }
+                if (response.data.success) callback({ success: true });else callback({ success: false });
             });
             this.$cookies.set('register_data', null);
         },
@@ -84487,6 +84502,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var price = 0;
             if (type == 1) price = this.agePrice;else if (type == 2) price = this.agePrice * 2;else if (type == 3) price = this.agePrice * 3;
             this.$emit('selectPackageHandler', price, type);
+        },
+        makePrettyNumber: function makePrettyNumber(number) {
+            return Number(number).toFixed(2);
         }
     },
     data: function data() {
@@ -84556,7 +84574,13 @@ var render = function() {
                             },
                             [
                               _c("strong", [
-                                _c("div", [_vm._v(_vm._s(_vm.agePrice + "€"))])
+                                _c("div", [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.makePrettyNumber(_vm.agePrice) + "€"
+                                    )
+                                  )
+                                ])
                               ])
                             ]
                           )
@@ -84577,7 +84601,13 @@ var render = function() {
                             },
                             [
                               _c("strong", [
-                                _c("div", [_vm._v(_vm._s(_vm.agePrice + "€"))])
+                                _c("div", [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.makePrettyNumber(_vm.agePrice) + "€"
+                                    )
+                                  )
+                                ])
                               ])
                             ]
                           )
@@ -84659,7 +84689,12 @@ var render = function() {
                             [
                               _c("strong", [
                                 _c("div", [
-                                  _vm._v(_vm._s(_vm.agePrice * 2 + "€"))
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.makePrettyNumber(_vm.agePrice * 2) +
+                                        "€"
+                                    )
+                                  )
                                 ])
                               ]),
                               _c("br")
@@ -84683,7 +84718,12 @@ var render = function() {
                             [
                               _c("strong", [
                                 _c("div", [
-                                  _vm._v(_vm._s(_vm.agePrice * 2 + "€"))
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.makePrettyNumber(_vm.agePrice * 2) +
+                                        "€"
+                                    )
+                                  )
                                 ])
                               ]),
                               _c("br")
@@ -84767,7 +84807,12 @@ var render = function() {
                             [
                               _c("strong", [
                                 _c("div", [
-                                  _vm._v(_vm._s(_vm.agePrice * 3 + "€"))
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.makePrettyNumber(_vm.agePrice * 3) +
+                                        "€"
+                                    )
+                                  )
                                 ])
                               ]),
                               _c("br")
@@ -84791,7 +84836,12 @@ var render = function() {
                             [
                               _c("strong", [
                                 _c("div", [
-                                  _vm._v(_vm._s(_vm.agePrice * 3 + "€"))
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.makePrettyNumber(_vm.agePrice * 3) +
+                                        "€"
+                                    )
+                                  )
                                 ])
                               ]),
                               _c("br")
@@ -87252,118 +87302,131 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'FormValidation',
-  mixins: [__WEBPACK_IMPORTED_MODULE_0_vuelidate__["validationMixin"]],
-  data: function data() {
-    return {
-      form: {
-        contractorType: null,
-        contractorFirstName: null,
-        contractorLastName: null,
-        contractorAddress: null,
-        contractorTaxCode: null,
-        contractorBirthday: null,
-        contractorBirthPlace: null,
-        contractorEmail: null,
-        contractorTelephone: null,
-
-        insuredType: null,
-        insuredFirstName: null,
-        insuredLastName: null,
-        insuredAddress: null,
-        insuredTaxCode: null,
-        insuredBirthday: null,
-        insuredBirthPlace: null,
-        insuredEmail: null,
-        insuredTelephone: null,
-
-        deathBenType: null,
-        deathBenFirstName: null,
-        deathBenLastName: null,
-        deathBenAddress: null,
-        deathBenTaxCode: null,
-        deathBenBirthday: null,
-        deathBenBirthPlace: null,
-        deathBenEmail: null,
-        deathBenTelephone: null,
-
-        receiveEmail: null
-      }
-    };
-  },
-  validations: {
-    form: {
-      contractorType: {
-        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-      },
-      contractorFirstName: {
-        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-      },
-      contractorLastName: {
-        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-      },
-      contractorAddress: {
-        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-      },
-      contractorTaxCode: {
-        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-      },
-      contractorBirthday: {
-        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-      },
-      contractorBirthPlace: {
-        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-      },
-      contractorEmail: {
-        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"],
-        email: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["email"]
-      },
-      contractorTelephone: {
-        required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
-      },
-
-      insuredType: {},
-      insuredFirstName: {},
-      insuredLastName: {},
-      insuredAddress: {},
-      insuredTaxCode: {},
-      insuredBirthday: {},
-      insuredBirthPlace: {},
-      insuredEmail: {},
-      insuredTelephone: {},
-
-      deathBenType: {},
-      deathBenFirstName: {},
-      deathBenLastName: {},
-      deathBenAddress: {},
-      deathBenTaxCode: {},
-      deathBenBirthday: {},
-      deathBenBirthPlace: {},
-      deathBenEmail: {},
-      deathBenTelephone: {},
-      receiveEmail: {}
-    }
-  },
-  methods: {
-    getValidationClass: function getValidationClass(fieldName) {
-      var field = this.$v.form[fieldName];
-
-      if (field) {
+    name: 'FormValidation',
+    mixins: [__WEBPACK_IMPORTED_MODULE_0_vuelidate__["validationMixin"]],
+    data: function data() {
         return {
-          'md-invalid': field.$invalid && field.$dirty
+            form: {
+                contractorType: null,
+                contractorFirstName: null,
+                contractorLastName: null,
+                contractorAddress: null,
+                contractorTaxCode: null,
+                contractorBirthday: null,
+                contractorBirthPlace: null,
+                contractorEmail: null,
+                contractorTelephone: null,
+
+                insuredType: null,
+                insuredFirstName: null,
+                insuredLastName: null,
+                insuredAddress: null,
+                insuredTaxCode: null,
+                insuredBirthday: null,
+                insuredBirthPlace: null,
+                insuredEmail: null,
+                insuredTelephone: null,
+
+                deathBenType: null,
+                deathBenFirstName: null,
+                deathBenLastName: null,
+                deathBenAddress: null,
+                deathBenTaxCode: null,
+                deathBenBirthday: null,
+                deathBenBirthPlace: null,
+                deathBenEmail: null,
+                deathBenTelephone: null,
+
+                receiveEmail: null
+            }
         };
-      }
     },
-    validateUser: function validateUser() {
-      this.$v.$touch();
-      return !this.$v.$invalid;
+    validations: {
+        form: {
+            contractorType: {
+                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+            },
+            contractorFirstName: {
+                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+            },
+            contractorLastName: {
+                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+            },
+            contractorAddress: {
+                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+            },
+            contractorTaxCode: {
+                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+            },
+            contractorBirthday: {
+                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+            },
+            contractorBirthPlace: {
+                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+            },
+            contractorEmail: {
+                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"],
+                email: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["email"]
+            },
+            contractorTelephone: {
+                required: __WEBPACK_IMPORTED_MODULE_1_vuelidate_lib_validators__["required"]
+            },
+
+            insuredType: {},
+            insuredFirstName: {},
+            insuredLastName: {},
+            insuredAddress: {},
+            insuredTaxCode: {},
+            insuredBirthday: {},
+            insuredBirthPlace: {},
+            insuredEmail: {},
+            insuredTelephone: {},
+
+            deathBenType: {},
+            deathBenFirstName: {},
+            deathBenLastName: {},
+            deathBenAddress: {},
+            deathBenTaxCode: {},
+            deathBenBirthday: {},
+            deathBenBirthPlace: {},
+            deathBenEmail: {},
+            deathBenTelephone: {},
+            receiveEmail: {}
+        }
+    },
+    methods: {
+        copyInformation: function copyInformation() {
+            this.form.insuredType = this.form.contractorType;
+            this.form.insuredFirstName = this.form.contractorFirstName;
+            this.form.insuredLastName = this.form.contractorLastName;
+            this.form.insuredAddress = this.form.contractorAddress;
+            this.form.insuredTaxCode = this.form.contractorTaxCode;
+            this.form.insuredBirthday = this.form.contractorBirthday;
+            this.form.insuredBirthPlace = this.form.contractorBirthPlace;
+            this.form.insuredEmail = this.form.contractorEmail;
+            this.form.insuredTelephone = this.form.contractorTelephone;
+        },
+        getValidationClass: function getValidationClass(fieldName) {
+            var field = this.$v.form[fieldName];
+            if (field) {
+                return {
+                    'md-invalid': field.$invalid && field.$dirty
+                };
+            }
+        },
+        validateUser: function validateUser() {
+            this.$v.$touch();
+            return !this.$v.$invalid;
+        }
     }
-  }
 });
 
 /***/ }),
@@ -89034,11 +89097,11 @@ var render = function() {
                           [
                             _c(
                               "md-option",
-                              { attrs: { value: "physical-person" } },
+                              { attrs: { value: "Persona fisica" } },
                               [_vm._v("Persona fisica")]
                             ),
                             _vm._v(" "),
-                            _c("md-option", { attrs: { value: "society" } }, [
+                            _c("md-option", { attrs: { value: "Società" } }, [
                               _vm._v("Società")
                             ])
                           ],
@@ -89348,7 +89411,27 @@ var render = function() {
             _c("md-card-header", [
               _c("div", { staticClass: "md-title text-center" }, [
                 _vm._v("Assicurato")
-              ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticStyle: { float: "right" } },
+                [
+                  _c(
+                    "md-button",
+                    {
+                      staticClass: "md-raised md-primary",
+                      on: {
+                        click: function($event) {
+                          _vm.copyInformation()
+                        }
+                      }
+                    },
+                    [_vm._v("Clona Informazioni")]
+                  )
+                ],
+                1
+              )
             ]),
             _vm._v(" "),
             _c("md-card-content", [
@@ -89388,11 +89471,11 @@ var render = function() {
                           [
                             _c(
                               "md-option",
-                              { attrs: { value: "physical-person" } },
+                              { attrs: { value: "Persona fisica" } },
                               [_vm._v("Persona fisica")]
                             ),
                             _vm._v(" "),
-                            _c("md-option", { attrs: { value: "society" } }, [
+                            _c("md-option", { attrs: { value: "Società" } }, [
                               _vm._v("Società")
                             ])
                           ],
@@ -93195,223 +93278,232 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "form-wizard",
-    {
-      ref: "formWizard",
-      attrs: { shape: "circle", color: "#e67e22", title: "", subtitle: "" },
-      on: { "on-complete": _vm.onComplete },
-      scopedSlots: _vm._u([
+  return _vm.showWizard == true
+    ? _c(
+        "form-wizard",
         {
-          key: "footer",
-          fn: function(props) {
-            return [
-              _c(
-                "div",
-                { staticClass: "wizard-footer-left" },
-                [
-                  props.activeTabIndex > 0 && !props.isLastStep
-                    ? _c(
-                        "wizard-button",
-                        {
-                          style: props.fillButtonStyle,
-                          nativeOn: {
-                            click: function($event) {
-                              props.prevTab()
-                            }
-                          }
-                        },
-                        [_vm._v("Indietro")]
-                      )
-                    : _vm._e()
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "wizard-footer-right" },
-                [
-                  !props.isLastStep && props.activeTabIndex != 2
-                    ? _c(
-                        "wizard-button",
-                        {
-                          staticClass: "wizard-footer-right",
-                          style: props.fillButtonStyle,
-                          nativeOn: {
-                            click: function($event) {
-                              props.nextTab()
-                            }
-                          }
-                        },
-                        [_vm._v("Avvanti")]
-                      )
-                    : props.isLastStep
-                      ? _c(
-                          "wizard-button",
-                          {
-                            staticClass: "wizard-footer-right finish-button",
-                            style: props.fillButtonStyle,
-                            nativeOn: {
-                              click: function($event) {
-                                return _vm.finishSteps($event)
+          ref: "formWizard",
+          attrs: { shape: "circle", color: "#e67e22", title: "", subtitle: "" },
+          on: { "on-complete": _vm.onComplete },
+          scopedSlots: _vm._u([
+            {
+              key: "footer",
+              fn: function(props) {
+                return [
+                  _c(
+                    "div",
+                    { staticClass: "wizard-footer-left" },
+                    [
+                      props.activeTabIndex > 0 && !props.isLastStep
+                        ? _c(
+                            "wizard-button",
+                            {
+                              style: props.fillButtonStyle,
+                              nativeOn: {
+                                click: function($event) {
+                                  props.prevTab()
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Finire")]
-                        )
-                      : _vm._e()
-                ],
-                1
-              )
-            ]
-          }
-        }
-      ])
-    },
-    [
-      _c("h2", { attrs: { slot: "title" }, slot: "title" }, [
-        _c("img", {
-          staticClass: "register_step_logo",
-          attrs: { src: "assets/img/Assiqura_Logo.png" }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "tab-content",
-        {
-          attrs: {
-            title: "l'età ",
-            icon: "ti-user",
-            "before-change": _vm.ageStepValidate
-          }
+                            },
+                            [_vm._v("Indietro")]
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "wizard-footer-right" },
+                    [
+                      !props.isLastStep && props.activeTabIndex != 2
+                        ? _c(
+                            "wizard-button",
+                            {
+                              staticClass: "wizard-footer-right",
+                              style: props.fillButtonStyle,
+                              nativeOn: {
+                                click: function($event) {
+                                  props.nextTab()
+                                }
+                              }
+                            },
+                            [_vm._v("Avanti")]
+                          )
+                        : props.isLastStep
+                          ? _c(
+                              "wizard-button",
+                              {
+                                staticClass:
+                                  "wizard-footer-right finish-button",
+                                style: props.fillButtonStyle,
+                                nativeOn: {
+                                  click: function($event) {
+                                    return _vm.finishSteps($event)
+                                  }
+                                }
+                              },
+                              [_vm._v("Inviare")]
+                            )
+                          : _vm._e()
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
         },
         [
+          _c("h2", { attrs: { slot: "title" }, slot: "title" }, [
+            _c("img", {
+              staticClass: "register_step_logo",
+              attrs: { src: "assets/img/Assiqura_Logo.png" }
+            })
+          ]),
+          _vm._v(" "),
           _c(
-            "div",
+            "tab-content",
             {
-              staticClass:
-                "container justify-content-center align-items-center align-content-center align-self-center",
-              staticStyle: {
-                "background-image":
-                  'url("assets/img/team-motivation-teamwork-together-53958.jpeg")',
-                "background-position": "center",
-                "background-size": "cover",
-                "background-repeat": "no-repeat"
-              },
-              attrs: { id: "app-head" }
+              attrs: {
+                title: "l'età ",
+                icon: "ti-user",
+                "before-change": _vm.ageStepValidate
+              }
             },
             [
               _c(
-                "h4",
+                "div",
                 {
-                  staticClass: "text-center text-head",
+                  staticClass:
+                    "container justify-content-center align-items-center align-content-center align-self-center",
                   staticStyle: {
-                    "font-family": "Montserrat, sans-serif",
-                    "font-style": "normal",
-                    "font-weight": "bold",
-                    "font-size": "15px",
-                    "padding-top": "21px",
-                    color: "rgb(230,230,230)"
-                  }
+                    "background-image":
+                      'url("assets/img/team-motivation-teamwork-together-53958.jpeg")',
+                    "background-position": "center",
+                    "background-size": "cover",
+                    "background-repeat": "no-repeat"
+                  },
+                  attrs: { id: "app-head" }
                 },
-                [_vm._v("Ognuno di noi ha tante cose a cui tiene,"), _c("br")]
+                [
+                  _c(
+                    "h4",
+                    {
+                      staticClass: "text-center text-head",
+                      staticStyle: {
+                        "font-family": "Montserrat, sans-serif",
+                        "font-style": "normal",
+                        "font-weight": "bold",
+                        "font-size": "15px",
+                        "padding-top": "21px",
+                        color: "rgb(230,230,230)"
+                      }
+                    },
+                    [
+                      _vm._v("Ognuno di noi ha tante cose a cui tiene,"),
+                      _c("br")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row text-center" }, [
+                    _c("img", {
+                      staticStyle: { width: "50px", margin: "0 auto" },
+                      attrs: {
+                        src: "assets/img/LogoneBlalloNice.png",
+                        id: "center-img-head"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "h4",
+                    {
+                      staticClass: "text-center text-head",
+                      staticStyle: {
+                        "font-weight": "bold",
+                        "font-family": "Montserrat, sans-serif",
+                        "font-size": "16px",
+                        color: "rgb(255,255,255)",
+                        "padding-top": "-36px"
+                      }
+                    },
+                    [
+                      _vm._v("proteggile tutte con un unica soluzione."),
+                      _c("br")
+                    ]
+                  )
+                ]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "row text-center" }, [
-                _c("img", {
-                  staticStyle: { width: "50px", margin: "0 auto" },
-                  attrs: {
-                    src: "assets/img/LogoneBlalloNice.png",
-                    id: "center-img-head"
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "h4",
-                {
-                  staticClass: "text-center text-head",
-                  staticStyle: {
-                    "font-weight": "bold",
-                    "font-family": "Montserrat, sans-serif",
-                    "font-size": "16px",
-                    color: "rgb(255,255,255)",
-                    "padding-top": "-36px"
-                  }
-                },
-                [_vm._v("proteggile tutte con un unica soluzione."), _c("br")]
-              )
+              _c("div", { staticClass: "container" }, [
+                _c(
+                  "p",
+                  {
+                    staticClass: "para-data",
+                    staticStyle: { color: "rgba(33,37,41,0.84)" }
+                  },
+                  [
+                    _vm._v(
+                      "Scegli il prodotto più completo che garantisca Tutela e Risparmio. "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "para-data data-calco" }, [
+                  _vm._v("Inserisci l'età e ottieni la tua soluzione")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "age-wrapper" },
+                  [
+                    _c("NumberInputSpinner", {
+                      attrs: { min: 18, max: 59 },
+                      model: {
+                        value: _vm.form.age,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "age", $$v)
+                        },
+                        expression: "form.age"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
             ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "container" }, [
-            _c(
-              "p",
-              {
-                staticClass: "para-data",
-                staticStyle: { color: "rgba(33,37,41,0.84)" }
-              },
-              [
-                _vm._v(
-                  "Scegli il prodotto più completo che garantisca Tutela e Risparmio. "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("p", { staticClass: "para-data data-calco" }, [
-              _vm._v("Inserisci l'età e ottieni la tua soluzione")
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "age-wrapper" },
-              [
-                _c("NumberInputSpinner", {
-                  attrs: { min: 18, max: 59 },
-                  model: {
-                    value: _vm.form.age,
-                    callback: function($$v) {
-                      _vm.$set(_vm.form, "age", $$v)
-                    },
-                    expression: "form.age"
-                  }
-                })
-              ],
-              1
-            )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "tab-content",
-        { attrs: { title: "protezioni", icon: "ti-hand-point-right" } },
-        [_c("explanation-step")],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "tab-content",
-        { attrs: { title: "Pacchetto", icon: "ti-money" } },
-        [
-          _c("SelectPackageStep", {
-            ref: "selectPackageStep",
-            on: { selectPackageHandler: _vm.onSelectPackage }
-          })
+          _c(
+            "tab-content",
+            { attrs: { title: "protezioni", icon: "ti-hand-point-right" } },
+            [_c("explanation-step")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "tab-content",
+            { attrs: { title: "Pacchetto", icon: "ti-money" } },
+            [
+              _c("SelectPackageStep", {
+                ref: "selectPackageStep",
+                on: { selectPackageHandler: _vm.onSelectPackage }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "tab-content",
+            { attrs: { title: "Informazione", icon: "ti-info" } },
+            [_c("PersonalInfoStep", { ref: "personalInfoStep" })],
+            1
+          )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "tab-content",
-        { attrs: { title: "Informazione", icon: "ti-info" } },
-        [_c("PersonalInfoStep", { ref: "personalInfoStep" })],
-        1
       )
-    ],
-    1
-  )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -93428,6 +93520,58 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 97 */,
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(99);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(15)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../css-loader/index.js!./v-slim-dialog.css", function() {
+			var newContent = require("!!../../css-loader/index.js!./v-slim-dialog.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".v-dialog{font-weight:100;align-items:center;bottom:0;display:none;-ms-flex-align:center;-ms-flex-pack:center;justify-content:center;left:0;opacity:0;overflow:hidden;padding:8px;position:fixed;right:0;top:0}.v-dialog.v-dialog-sm .v-dialog-container{max-width:320px;padding:0 8px}.v-dialog.v-dialog-lg .v-dialog-container{box-shadow:none;max-width:960px}.v-dialog.active,.v-dialog:target{display:flex;display:-ms-flexbox;opacity:1;z-index:400}.v-dialog.active .v-dialog-overlay,.v-dialog:target .v-dialog-overlay{background:rgba(248,249,250,.75);bottom:0;cursor:default;display:block;left:0;position:absolute;right:0;top:0}.v-dialog.active .v-dialog-container,.v-dialog:target .v-dialog-container{animation:slide-down .2s ease 1;z-index:1}.v-dialog-container{background:#fff;border-radius:2px;box-shadow:0 4px 10px rgba(69,77,93,.3);display:flex;display:-ms-flexbox;-ms-flex-direction:column;flex-direction:column;max-height:75vh;max-width:640px;padding:0 16px;width:100%;color:#50596c}.v-dialog-container.v-dialog-fullheight{max-height:100vh}.v-dialog-container .v-dialog-header{color:#454d5d;padding:16px}.v-dialog-container .v-dialog-header .v-dialog-title{font-size:110%;font-weight:400}.v-dialog-container .v-dialog-body{overflow-y:auto;padding:16px;position:relative}.v-dialog-container .v-dialog-body .v-dialog-input{display:block;width:100%}.v-dialog-container .v-dialog-body .prompt-error-message{color:#d9534f;font-size:14px}.v-dialog-container .v-dialog-footer{padding:16px;text-align:right}.v-dialog-container .v-dialog-btn{-webkit-appearance:none;-moz-appearance:none;appearance:none;background:transparent;border:none;color:#5cb85c;cursor:pointer;display:inline-block;font-size:16px;height:36px;line-height:20px;outline:none;padding:7px 8px;text-align:center;text-decoration:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;vertical-align:middle;white-space:nowrap}.v-dialog-container .v-dialog-btn.v-dialog-btn-danger{color:#d9534f}.v-dialog-container .v-dialog-btn.v-dialog-btn-close{height:16px;line-height:16px;margin-left:8px;margin-right:-15px;padding:0;width:16px;float:right;color:#50596c}.v-dialog-container .v-dialog-btn.v-dialog-btn-close:before{content:\"\\2715\"}.v-dialog-container .v-dialog-btn.disabled,.v-dialog-container .v-dialog-btn:disabled,.v-dialog-container .v-dialog-btn[disabled]{cursor:default;opacity:.5;pointer-events:none}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports) {
+
+module.exports=function(t){var e={};function i(o){if(e[o])return e[o].exports;var n=e[o]={i:o,l:!1,exports:{}};return t[o].call(n.exports,n,n.exports,i),n.l=!0,n.exports}return i.m=t,i.c=e,i.d=function(t,e,o){i.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:o})},i.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},i.t=function(t,e){if(1&e&&(t=i(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(i.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var n in t)i.d(o,n,function(e){return t[e]}.bind(null,n));return o},i.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return i.d(e,"a",e),e},i.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},i.p="/",i(i.s=4)}([function(t,e,i){},function(t,e,i){"use strict";i.r(e);function o(t,e,i,o,n,s,a,l){var r,c="function"==typeof t?t.options:t;if(e&&(c.render=e,c.staticRenderFns=i,c._compiled=!0),o&&(c.functional=!0),s&&(c._scopeId="data-v-"+s),a?(r=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),n&&n.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(a)},c._ssrRegister=r):n&&(r=l?function(){n.call(this,this.$root.$options.shadowRoot)}:n),r)if(c.functional){c._injectStyles=r;var u=c.render;c.render=function(t,e){return r.call(e),u(t,e)}}else{var d=c.beforeCreate;c.beforeCreate=d?[].concat(d,r):[r]}return{exports:t,options:c}}var n=o({props:{value:[Number,String]},computed:{model:{get:function(){return this.value},set:function(t){this.$emit("input",t)}}},methods:{isValid:function(){return Boolean(String(this.model).trim())}},mounted:function(){this.$el.focus()}},function(){var t=this,e=t.$createElement;return(t._self._c||e)("input",{directives:[{name:"model",rawName:"v-model",value:t.model,expression:"model"}],domProps:{value:t.model},on:{input:function(e){e.target.composing||(t.model=e.target.value)}}})},[],!1,null,null,null).exports,s={props:{item:{type:Object,required:!0},show:{type:Boolean,default:!1}},data:function(){return{valid:this.isValid()}},methods:{isValid:function(){return!this.item.prompt||this.$refs.prompt&&this.$refs.prompt.isValid()},onPrompt:function(){var t=this;setTimeout(function(){t.valid=t.isValid()})},onClose:function(t){this.$emit("close",this.item,t)},onOk:function(){this.valid&&this.onClose(!0)}}},a=(i(3),o({components:{VDialog:o(s,function(){var t,e=this,i=e.$createElement,o=e._self._c||i;return o("div",{staticClass:"v-dialog",class:(t={active:e.show},t["v-dialog-"+e.item.size]=e.item.size,t)},[o("div",{staticClass:"v-dialog-overlay",on:{click:function(t){e.onClose()}}}),o("div",{staticClass:"v-dialog-container"},[o("div",{staticClass:"v-dialog-header"},[o("a",{staticClass:"v-dialog-btn v-dialog-btn-close",attrs:{"aria-label":"Fechar"},on:{click:function(t){e.onClose()}}}),e.item.title?o("div",{staticClass:"v-dialog-title"},[e._v(e._s(e.item.title))]):e._e()]),o("div",{staticClass:"v-dialog-body"},[o("div",{staticClass:"content"},[o("div",[e._v(e._s(e.item.message))]),e.item.prompt?o("form",{on:{submit:function(t){return t.preventDefault(),e.onOk(t)}}},[o(e.item.prompt.component,{ref:"prompt",tag:"div",staticClass:"v-dialog-input",on:{input:e.onPrompt},model:{value:e.item.prompt.value,callback:function(t){e.$set(e.item.prompt,"value",t)},expression:"item.prompt.value"}}),e.valid?e._e():o("div",{staticClass:"prompt-error-message"},[e._v(e._s(e.item.prompt.invalidMessage))])]):e._e()])]),o("div",{staticClass:"v-dialog-footer"},[e.item.cancelLabel?o("a",{staticClass:"v-dialog-btn v-dialog-btn-danger",on:{click:function(t){e.onClose(!1)}}},[e._v(e._s(e.item.cancelLabel))]):e._e(),o("a",{staticClass:"v-dialog-btn success",class:{disabled:!e.valid},attrs:{disabled:!e.valid},on:{click:e.onOk}},[e._v(e._s(e.item.okLabel))])])])])},[],!1,null,null,null).exports},data:function(){return{items:[]}},methods:{open:function(t,e){var i=this,o=e.title,n=e.cancelLabel,s=e.prompt,a=e.size,l=e.okLabel,r=void 0===l?"OK":l;return this.$parent||(this.$mount(),document.body.appendChild(this.$el)),new Promise(function(e){var l={key:"".concat(Date.now(),"-").concat(Math.random()),show:!0,message:t,title:o,cancelLabel:n,okLabel:r,prompt:s,size:a,resolve:e};i.items.push(l)})},alert:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},i=e.title,o=e.okLabel,n=void 0===o?"OK":o,s=e.size;return this.open(t,{title:i,okLabel:n,size:s})},confirm:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},i=e.title,o=e.cancelLabel,n=void 0===o?"Cancel":o,s=e.okLabel,a=void 0===s?"OK":s,l=e.size;return this.open(t,{title:i,cancelLabel:n,okLabel:a,size:l})},prompt:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},i=e.title,o=e.okLabel,s=void 0===o?"OK":o,a=e.size,l=e.prompt;return l=Object.assign({value:"",invalidMessage:"invalid!",component:n},l),this.open(t,{title:i,okLabel:s,prompt:l,size:a})},remove:function(t){var e=this.items.indexOf(t);e>=0&&this.items.splice(e,1)},onClose:function(t,e){var i={ok:e};t.prompt&&(i.value=t.prompt.value),t.resolve(i),t.show=!1,this.remove(t)},keyUp:function(t){"Escape"===t.key&&this.items.length>0&&this.onClose(this.items[this.items.length-1])}},created:function(){window.addEventListener("keyup",this.keyUp)}},function(){var t=this,e=t.$createElement,i=t._self._c||e;return i("div",{staticClass:"v-dialogs"},t._l(t.items,function(e){return i("v-dialog",{key:e.key,attrs:{show:e.show,item:e},on:{close:t.onClose}})}))},[],!1,null,null,null).exports);a.install=function(t,e){t.prototype.$dialogs=new(t.extend(a))({propsData:e}),t.dialogs=t.prototype.$dialogs};e.default=a},,function(t,e,i){"use strict";var o=i(0);i.n(o).a},function(t,e,i){t.exports=i(1)}]);
 
 /***/ })
 /******/ ]);

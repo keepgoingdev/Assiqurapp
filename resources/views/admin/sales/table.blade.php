@@ -1,40 +1,42 @@
 <table class="table table-responsive" id="sales-table">
     <thead>
         <tr>
-        <th>Seller ID</th>
-        <th>Age</th>
-        <!--<th>Packagetype</th>-->
-        <th>Price</th>
-        <th>Contractortype</th>
-        <th>Contractorfirstname</th>
-        <th>Contractorlastname</th>
-        <th>Contractoraddress</th>
-        <th>Contractortaxcode</th>
-        <th>Contractorbirthday</th>
-        <!--<th>Contractorbirthplace</th>-->
-        <th>Contractoremail</th>
-        <th>Contractortelephone</th>
+        <th>ID</th>
+        <th>Età</th>
+        <!--<th>Tipo di pacchetto</th>-->
+        <th>Prezzo</th>
+        <th>Contraente Genere</th>
+        <th>Contraente Nome</th>
+        <th>Contraente Cognome</th>
+        <th>Contraente Indirizzo</th>
+        <th>Contraente Luogo</th>
+        <th>Contraente Compleanno</th>
+        <!--<th>Contraente luogo di nascita</th>-->
+        <th>Contraente EMail</th>
+        <th>Contraente Telefono</th>
         <!--
-        <th>Insuredtype</th>
-        <th>Insuredfirstname</th>
-        <th>Insuredlastname</th>
-        <th>Insuredaddress</th>
-        <th>Insuredtaxcode</th>
-        <th>Insuredbirthday</th>
-        <th>Insuredbirthplace</th>
-        <th>Insuredemail</th>
-        <th>Insuredtelephone</th>
-        <th>Deathbentype</th>
-        <th>Deathbenfirstname</th>
-        <th>Deathbenlastname</th>
-        <th>Deathbenaddress</th>
-        <th>Deathbentaxcode</th>
-        <th>Deathbenbirthday</th>
-        <th>Deathbenbirthplace</th>
-        <th>Deathbenemail</th>
-        <th>Deathbentelephone</th>
+        <th>Assicurato Genere</th>
+        <th>Assicurato Nome</th>
+        <th>Assicurato Cognome</th>
+        <th>Assicurato Indirizzo</th>
+        <th>Assicurato Luogo</th>
+        <th>Assicurato Compleanno</th>
+        <th>Assicurato luogo di nascita</th>
+        <th>Assicurato EMail</th>
+        <th>Assicurato Telefono</th>
+
+        <th>Beneficiario Caso Morte Genere</th>
+        <th>Beneficiario Caso Morte Nome</th>
+        <th>Beneficiario Caso Morte Cognome</th>
+        <th>Beneficiario Caso Morte Indirizzo</th>
+        <th>Beneficiario Caso Morte Luogo</th>
+        <th>Beneficiario Caso Morte Compleanno</th>
+        <th>Beneficiario luogo di nascita</th>
+        <th>Beneficiario Caso Morte EMail</th>
+        <th>Beneficiario Caso Morte Telefono</th>
+
         <th>Receiveemail</th>-->
-            <th colspan="3">Action</th>
+        <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>

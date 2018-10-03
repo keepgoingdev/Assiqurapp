@@ -40,7 +40,7 @@
 
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to Admin</p>
+        <p class="login-box-msg">Log in to Admin</p>
 
         <form method="post" action="{{ url('/admin/login') }}">
             {!! csrf_field() !!}
@@ -69,13 +69,13 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox" name="remember"> Remember Me
+                            <input type="checkbox" name="remember"> Ricordati di me
                         </label>
                     </div>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
                 </div>
                 <!-- /.col -->
             </div>

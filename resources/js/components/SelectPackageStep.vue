@@ -182,11 +182,11 @@
                                     <tbody>
                                         <tr>
                                             <td class="coliqui">TCM (Premorienza)</td>
-                                            <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice + "€" }}</div></strong></td>
+                                            <td class="coliqui" style="font-weight:bold;"><strong><div>{{ makePrettyNumber(agePrice) + "€" }}</div></strong></td>
                                         </tr>
                                         <tr>
                                             <td class="coliqui">Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)</td>
-                                            <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice + "€" }}</div></strong></td>
+                                            <td class="coliqui" style="font-weight:bold;"><strong><div>{{ makePrettyNumber(agePrice) + "€" }}</div></strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -360,11 +360,11 @@
                                 <tbody>
                                     <tr>
                                         <td class="coliqui">TCM (Premorienza)</td>
-                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice * 2 + "€" }}</div></strong><br></td>
+                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ makePrettyNumber(agePrice * 2) + "€" }}</div></strong><br></td>
                                     </tr>
                                     <tr>
                                         <td class="coliqui">Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)</td>
-                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice * 2 + "€" }}</div></strong><br></td>
+                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ makePrettyNumber(agePrice * 2) + "€" }}</div></strong><br></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -538,11 +538,11 @@
                                 <tbody>
                                     <tr>
                                         <td class="coliqui">TCM (Premorienza)</td>
-                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice * 3 + "€" }}</div></strong><br></td>
+                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ makePrettyNumber(agePrice * 3) + "€" }}</div></strong><br></td>
                                     </tr>
                                     <tr>
                                         <td class="coliqui">Invalidità Permanente Totale da Infortunio e/o Malattia (60%=100%)</td>
-                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ agePrice * 3 + "€" }}</div></strong><br></td>
+                                        <td class="coliqui" style="font-weight:bold;"><strong><div>{{ makePrettyNumber(agePrice * 3) + "€" }}</div></strong><br></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -567,6 +567,9 @@ export default {
             else if(type == 3)
                 price = this.agePrice * 3;
             this.$emit('selectPackageHandler', price, type);
+        },
+        makePrettyNumber : function(number){
+            return Number((number)).toFixed(2);
         }
     },
     data: ()=>{

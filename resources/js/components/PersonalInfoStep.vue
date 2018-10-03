@@ -30,8 +30,8 @@
                         <md-field :class="getValidationClass('contractorType')">
                             <label for="allin-radio-namecontraente">Contraente</label>
                             <md-select name="contractorType" id="contractorType" v-model="form.contractorType" md-dense>
-                            <md-option value="physical-person">Persona fisica</md-option>
-                            <md-option value="society">Società</md-option>
+                            <md-option value="Persona fisica">Persona fisica</md-option>
+                            <md-option value="Società">Società</md-option>
                             </md-select>
                             <span class="md-error">The Contraente is required</span>
                         </md-field>
@@ -113,6 +113,9 @@
         <md-card class="md-layout-item md-size-60 md-small-size-100">
             <md-card-header>
                 <div class="md-title text-center">Assicurato</div>
+                <div style="float:right">
+                    <md-button class="md-raised md-primary" v-on:click = "copyInformation()">Clona Informazioni</md-button>
+                </div>
             </md-card-header>
 
             <md-card-content>
@@ -121,8 +124,8 @@
                         <md-field :class="getValidationClass('insuredType')">
                             <label for="allin-radio-nameinsured">Assicurato</label>
                             <md-select name="insuredType" id="insuredType" v-model="form.insuredType" md-dense>
-                            <md-option value="physical-person">Persona fisica</md-option>
-                            <md-option value="society">Società</md-option>
+                            <md-option value="Persona fisica">Persona fisica</md-option>
+                            <md-option value="Società">Società</md-option>
                             </md-select>
                             <span class="md-error">The Assicurato is required</span>
                         </md-field>
@@ -484,20 +487,31 @@
       }
     },
     methods: {
-      getValidationClass (fieldName) {
-        const field = this.$v.form[fieldName]
+        
+        copyInformation(){
+            this.form.insuredType = this.form.contractorType;
+            this.form.insuredFirstName = this.form.contractorFirstName;
+            this.form.insuredLastName = this.form.contractorLastName;
+            this.form.insuredAddress = this.form.contractorAddress;
+            this.form.insuredTaxCode = this.form.contractorTaxCode;
+            this.form.insuredBirthday = this.form.contractorBirthday;
+            this.form.insuredBirthPlace = this.form.contractorBirthPlace;
+            this.form.insuredEmail = this.form.contractorEmail;
+            this.form.insuredTelephone = this.form.contractorTelephone;
+        },
+        getValidationClass (fieldName) {
+            const field = this.$v.form[fieldName]
+            if (field) {
+                return {
+                    'md-invalid': field.$invalid && field.$dirty
+                }
+            }
+        },
 
-        if (field) {
-          return {
-            'md-invalid': field.$invalid && field.$dirty
-          }
+        validateUser () {
+            this.$v.$touch();
+            return !this.$v.$invalid;
         }
-      },
-
-      validateUser () {
-        this.$v.$touch();
-        return !this.$v.$invalid;
-      }
     }
   }
 </script>

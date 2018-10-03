@@ -1,6 +1,6 @@
 @hasrole('admin')
     <li class="{{ Request::is('users*') ? 'active' : '' }}">
-        <a href="{!! route('admin.users.index') !!}"><i class="fa fa-edit"></i><span>Sellers</span></a>
+        <a href="{!! route('admin.users.index') !!}"><i class="fa fa-edit"></i><span>Agente</span></a>
     </li>
 @endhasrole
 <li class="{{ Request::is('sales*') ? 'active' : '' }}">
