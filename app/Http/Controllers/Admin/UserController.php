@@ -143,7 +143,9 @@ class UserController extends AppBaseController
         {
             $user->password = bcrypt($request->password);
         }
-
+        $user->email = $request->email;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
         $user->syncRoles('seller');
 
         $user->save();
@@ -164,6 +166,7 @@ class UserController extends AppBaseController
         ]);
 
         $user = Auth::user();
+        $user->email = $request->email;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         if(isset($request->password))

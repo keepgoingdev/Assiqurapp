@@ -82,7 +82,7 @@
         beforeMount(){
             if(this.check_logged_in())
             {
-                let register_data = this.$cookies.get('register_data', this.form);
+                var register_data = this.$cookies.get('register_data', this.form);
                 if(register_data != "null")
                 {
                     this.send_register_request(register_data, (response) => {

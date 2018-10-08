@@ -559,7 +559,7 @@
 export default {
     methods: {
         onSelectPackage: function (type) {
-            let price = 0;
+            var price = 0;
             if(type == 1)
                 price = this.agePrice;
             else if(type == 2)
