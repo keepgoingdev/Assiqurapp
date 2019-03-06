@@ -1,10 +1,13 @@
 <?php
 Auth::routes();
 
-Route::get('/', 'RegisterSaleController@index');
-Route::post('/register_sale', ['as'=> 'register_sale', 'uses' => 'RegisterSaleController@register_sale']);
+
+
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', 'RegisterSaleController@index');
+    Route::post('/register_sale', ['as'=> 'register_sale', 'uses' => 'RegisterSaleController@register_sale']);
+    Route::post('/register_questionnaire', ['as'=> 'register_questionnaire', 'uses' => 'RegisterSaleController@register_questionnaire']);
     Route::get('admin/users/profile', ['as'=> 'admin.users.profile', 'uses' => 'Admin\UserController@profile']);
     Route::patch('admin/users/update_profile', ['as'=> 'admin.users.update_profile', 'uses' => 'Admin\UserController@update_profile']);
     Route::get('admin/sales', ['as'=> 'admin.sales.index', 'uses' => 'Admin\SaleController@index']);

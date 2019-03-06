@@ -1,8 +1,10 @@
 <template>
-  <form-wizard v-if = "showWizard == true" ref="formWizard" @on-complete="onComplete" shape = "circle" color="#e67e22" title = "" subtitle = "">
-       <h2 slot="title">
-           <img class = "register_step_logo" src = "assets/img/Assiqura_Logo.png"/>
-       </h2>
+    <div>
+        <Questionnaire v-if = "showQuestionnaire == true" @questionnaireFinishedHandler = "onQuestionnaireFinished" ></Questionnaire>
+        <form-wizard v-if = "showWizard == true" ref="formWizard" @on-complete="onComplete" shape = "circle" color="#e67e22" title = "" subtitle = "">
+            <h2 slot="title">
+                <img class = "register_step_logo" src = "assets/img/Assiqura_Logo.png"/>
+            </h2>
             <tab-content title="l'età " icon="ti-user" :before-change="ageStepValidate">
                 <div class="container justify-content-center align-items-center align-content-center align-self-center" id="app-head" style="background-image:url(&quot;assets/img/team-motivation-teamwork-together-53958.jpeg&quot;);background-position:center;background-size:cover;background-repeat:no-repeat;">
                     <h4 class="text-center text-head" style="font-family:Montserrat, sans-serif;font-style:normal;font-weight:bold;font-size:15px;padding-top:21px;color:rgb(230,230,230);">Ognuno di noi ha tante cose a cui tiene,<br></h4>
@@ -39,6 +41,7 @@
                 </div>
             </template>
         </form-wizard>
+    </div>
 </template>
 
 <script>
@@ -48,6 +51,7 @@
     import ExplanationStep from './ExplanationStep.vue';
     import SelectPackageStep from './SelectPackageStep.vue';
     import PersonalInfoStep from './PersonalInfoStep.vue';
+    import Questionnaire from './Questionnaire.vue';
 
     import VueRouter from 'vue-router'
     Vue.use(require('vue-cookies'));
@@ -60,6 +64,7 @@
     export default {
         props: ['logged_in'],
         components: {
+            Questionnaire,
             ExplanationStep,
             SelectPackageStep,
             PersonalInfoStep,
@@ -71,15 +76,18 @@
         data: ()=>{
             return {
             showWizard: false,
+            showQuestionnaire: false,
             form :{
                 age: 18,
                 price: 0,
                 personalInfo: {},
+                questionnaire_data: {},
                 packageType: 0
             },
           }
         },
         beforeMount(){
+            /*
             if(this.check_logged_in())
             {
                 var register_data = this.$cookies.get('register_data', this.form);
@@ -89,14 +97,14 @@
                         if(response.success)
                             location.href = "/regSuccessfull";
                         else
-                            this.showWizard = true;
+                            this.showQuestionnaire = true;
                     });
                 }
                 else
-                    this.showWizard = true;
+                    this.showQuestionnaire = true;
             }
-            else
-                this.showWizard = true;
+            else*/
+            this.showQuestionnaire = true;
         },
         methods: {
             onComplete: function(){
@@ -144,6 +152,14 @@
                     this.$refs.formWizard.$emit('on-complete');
                 }
             },
+
+            onQuestionnaireFinished: function(data){
+                this.form.questionnaire_data = data;
+                this.showQuestionnaire = false;
+                this.showWizard = true;
+                console.log(this.form.questionnaire_data);
+            },
+
             priceFromAge: function(number){
                 if (number == 18){
                     return "300.000";

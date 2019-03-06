@@ -24,10 +24,11 @@
         "v-slim-dialog": "0.0.9",
         "vue-cookies": "^1.5.7",
         "vue-form-wizard": "^0.8.4",
+        "vue-loading-overlay": "^3.1.1",
         "vue-material": "^1.0.0-beta-10.2",
         "vue-number-input-spinner": "^2.0.5",
         "vue-router": "^3.0.1",
-        "vue-stepper": "^1.3.2",
+        "vue-stepper": "^1.4.1",
         "vue-tabs-component": "^1.5.0",
         "vuelidate": "^0.7.4"
     }

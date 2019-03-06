@@ -165,6 +165,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //PDFDOM
+        Barryvdh\DomPDF\ServiceProvider::class,
+
     ],
 
     /*
@@ -216,6 +219,8 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
+
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

@@ -56,7 +56,8 @@ class Sale extends Model
 
     protected $dates = ['deleted_at'];
 
-
+    protected $guarded = [];
+/*
     public $fillable = [
         'age',
         'packageType',
@@ -91,12 +92,13 @@ class Sale extends Model
         'deathBenTelephone',
         'receiveEmail'
     ];
-
+*/
     /**
      * The attributes that should be casted to native types.
      *
      * @var array
      */
+    /*
     protected $casts = [
         'id' => 'integer',
         'age' => 'integer',
@@ -132,7 +134,7 @@ class Sale extends Model
         'deathBenTelephone' => 'string',
         'receiveEmail' => 'string'
     ];
-
+*/
     /**
      * Validation rules
      *
