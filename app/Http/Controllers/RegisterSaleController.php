@@ -81,10 +81,10 @@ class RegisterSaleController extends Controller
 
             //Send Email With Attachment
             \Mail::send('registerSale.mail', ['name'=> $data['idd_first_name'] . ' ' . $data['idd_last_name']], function($message) use ($data, $file_full_path){
-                $message->to($data['idd_email'], 'Assiqurapp')->subject
+                $message->to($data['idd_email'], 'AssyTech')->subject
                     ('Risultato per la tua assicurazione');
                 $message->attach($file_full_path);
-                $message->from('noreply@gmail.com','Assiqurapp');
+                $message->from('noreply@gmail.com','AssyTech');
             });
 
             unlink($file_full_path);
@@ -135,7 +135,15 @@ class RegisterSaleController extends Controller
 
             if(count($Envelope->Bulks[0]->FinishedDocuments) > 0)
             {
-                self::namirialDownloadDocument($Envelope->Bulks[0]->FinishedDocuments[0]->FlowDocumentId, $sale->id . ".pdf");
+                $generatedFile = self::namirialDownloadDocument($Envelope->Bulks[0]->FinishedDocuments[0]->FlowDocumentId, $sale->id . ".pdf");
+
+                //Send Email With Attachment
+                \Mail::send('registerSale.contractMail', ['name'=> $sale->idd_first_name . ' ' . $sale->idd_last_name], function($message) use ($sale, $generatedFile){
+                    $message->to($sale->idd_email, 'AssyTech')->subject
+                        ('AssyTech - il tuo contratto');
+                    $message->attach($generatedFile);
+                    $message->from('noreply@gmail.com','AssyTech');
+                });
                 return;
             }
             sleep(5);
@@ -329,10 +337,10 @@ class RegisterSaleController extends Controller
                     ]
                 ],
                 "StatusUpdateCallbackUrl" => self::public_url . "/log?envelope=##EnvelopeId##&action=##Action##&internalid=" . $sale->id,
-                "Name" => "Assiqurapp Contract",
+                "Name" => "AssyTech Contract",
                 "EmailSubject" => "Our contract",
                 "EmailBody" => "Hey please sign the document",
-                "DisplayedEmailSender" => "Assiqurapp",
+                "DisplayedEmailSender" => "AssyTech",
                 "EnableReminders" => false,
                 "FirstReminderDayAmount"=> 0,
                 "RecurrentReminderDayAmount"=> 0,
@@ -534,6 +542,8 @@ class RegisterSaleController extends Controller
         $documentFile = fopen(self::contract_document_path . $fileName, "w") or die("Unable to open file!");
         fwrite($documentFile, $response);
         fclose($documentFile);
+
+        return self::contract_document_path . $fileName;
     }
 
     public static function generateSignPDF($sale)

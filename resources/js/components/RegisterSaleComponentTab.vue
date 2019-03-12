@@ -20,7 +20,7 @@
                     <p class="para-data" style="color:rgba(33,37,41,0.84);">Scegli il prodotto più completo che garantisca Tutela e Risparmio.&nbsp;</p>
                     <p class="para-data data-calco">Inserisci l'età e ottieni la tua soluzione</p>
                     <div class = "age-wrapper">
-                        <NumberInputSpinner :min="18" :max="59" v-model="form.age" />
+                        <NumberInputSpinner :min="1" :max="100" v-model="form.age" />
                     </div>
                 </div>
             </tab-content>
