@@ -40,6 +40,16 @@ class SaleController extends AppBaseController
             $sales = $user->sales;
         }
 
+        /**
+         * Must be fixed
+         * Remove Sales records if pending is 1
+         */
+        foreach($sales as $key=>$sale)
+        {
+            if($sale->pending == 1)
+                unset($sales[$key]);
+        }
+
         return view('admin.sales.index')
             ->with('sales', $sales);
     }

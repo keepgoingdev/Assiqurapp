@@ -1,5 +1,8 @@
 <template>
     <div>
+        <loading :active.sync="isLoading"
+            :is-full-page="fullPage">
+        </loading>
         <Questionnaire v-if = "showQuestionnaire == true" @questionnaireFinishedHandler = "onQuestionnaireFinished" ></Questionnaire>
         <form-wizard v-if = "showWizard == true" ref="formWizard" @on-complete="onComplete" shape = "circle" color="#e67e22" title = "" subtitle = "">
             <h2 slot="title">
@@ -48,6 +51,11 @@
     import {FormWizard, TabContent} from 'vue-form-wizard';
     import NumberInputSpinner from 'vue-number-input-spinner';
 
+    //Loading
+    import Loading  from 'vue-loading-overlay';
+    // Import stylesheet
+    import 'vue-loading-overlay/dist/vue-loading.css';
+
     import ExplanationStep from './ExplanationStep.vue';
     import SelectPackageStep from './SelectPackageStep.vue';
     import PersonalInfoStep from './PersonalInfoStep.vue';
@@ -71,10 +79,13 @@
             NumberInputSpinner,
             FormWizard,
             TabContent,
-            SlimDialog
+            SlimDialog,
+            Loading
         },
         data: ()=>{
             return {
+            isLoading: false,
+            fullPage: true,
             showWizard: false,
             showQuestionnaire: false,
             form :{
@@ -110,9 +121,13 @@
             onComplete: function(){
                 if(this.check_logged_in())
                 {
+                    this.isLoading = true;
                     this.send_register_request(this.form, (response)=>{
                         if(response.success)
-                            location.href = "/regSuccessfull";
+                        {
+                            location.href = response.redirect;
+                        }
+                        this.isLoading = false;
                     });
                 }
                 else
@@ -126,10 +141,7 @@
             },
             send_register_request: function(form_values, callback){
                 axios.post('/register_sale', form_values).then((response)=>{
-                    if(response.data.success)
-                        callback({success:true});
-                    else
-                        callback({success:false});
+                    callback(response.data);
                 });
                 this.$cookies.set('register_data', null);
             }

@@ -14,6 +14,7 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.7.0",
+        "setasign/fpdi-fpdf": "2.2",
         "spatie/laravel-permission": "^2.20"
     },
     "require-dev": {

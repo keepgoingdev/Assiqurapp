@@ -78746,19 +78746,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_form_wizard___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_form_wizard__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_number_input_spinner__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_number_input_spinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_number_input_spinner__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ExplanationStep_vue__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ExplanationStep_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ExplanationStep_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SelectPackageStep_vue__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SelectPackageStep_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__SelectPackageStep_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Questionnaire_vue__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Questionnaire_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Questionnaire_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_router__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_v_slim_dialog_dist_v_slim_dialog_css__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_v_slim_dialog_dist_v_slim_dialog_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_v_slim_dialog_dist_v_slim_dialog_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_v_slim_dialog__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_v_slim_dialog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_v_slim_dialog__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_loading_overlay_dist_vue_loading_css__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_loading_overlay_dist_vue_loading_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_loading_overlay_dist_vue_loading_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ExplanationStep_vue__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ExplanationStep_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ExplanationStep_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SelectPackageStep_vue__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SelectPackageStep_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__SelectPackageStep_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__PersonalInfoStep_vue__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__PersonalInfoStep_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__PersonalInfoStep_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Questionnaire_vue__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Questionnaire_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__Questionnaire_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_router__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_v_slim_dialog_dist_v_slim_dialog_css__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_v_slim_dialog_dist_v_slim_dialog_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_v_slim_dialog_dist_v_slim_dialog_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_v_slim_dialog__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_v_slim_dialog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_v_slim_dialog__);
+//
+//
+//
 //
 //
 //
@@ -78807,6 +78814,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
+
+
+//Loading
+
+// Import stylesheet
 
 
 
@@ -78816,26 +78828,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 Vue.use(__webpack_require__(102));
-Vue.use(__WEBPACK_IMPORTED_MODULE_6_vue_router__["a" /* default */]);
+Vue.use(__WEBPACK_IMPORTED_MODULE_8_vue_router__["a" /* default */]);
 
 
 
-Vue.use(__WEBPACK_IMPORTED_MODULE_8_v_slim_dialog___default.a);
+Vue.use(__WEBPACK_IMPORTED_MODULE_10_v_slim_dialog___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['logged_in'],
     components: {
-        Questionnaire: __WEBPACK_IMPORTED_MODULE_5__Questionnaire_vue___default.a,
-        ExplanationStep: __WEBPACK_IMPORTED_MODULE_2__ExplanationStep_vue___default.a,
-        SelectPackageStep: __WEBPACK_IMPORTED_MODULE_3__SelectPackageStep_vue___default.a,
-        PersonalInfoStep: __WEBPACK_IMPORTED_MODULE_4__PersonalInfoStep_vue___default.a,
+        Questionnaire: __WEBPACK_IMPORTED_MODULE_7__Questionnaire_vue___default.a,
+        ExplanationStep: __WEBPACK_IMPORTED_MODULE_4__ExplanationStep_vue___default.a,
+        SelectPackageStep: __WEBPACK_IMPORTED_MODULE_5__SelectPackageStep_vue___default.a,
+        PersonalInfoStep: __WEBPACK_IMPORTED_MODULE_6__PersonalInfoStep_vue___default.a,
         NumberInputSpinner: __WEBPACK_IMPORTED_MODULE_1_vue_number_input_spinner___default.a,
         FormWizard: __WEBPACK_IMPORTED_MODULE_0_vue_form_wizard__["FormWizard"],
         TabContent: __WEBPACK_IMPORTED_MODULE_0_vue_form_wizard__["TabContent"],
-        SlimDialog: __WEBPACK_IMPORTED_MODULE_8_v_slim_dialog___default.a
+        SlimDialog: __WEBPACK_IMPORTED_MODULE_10_v_slim_dialog___default.a,
+        Loading: __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay___default.a
     },
     data: function data() {
         return {
+            isLoading: false,
+            fullPage: true,
             showWizard: false,
             showQuestionnaire: false,
             form: {
@@ -78870,9 +78885,20 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_8_v_slim_dialog___default.a);
 
     methods: {
         onComplete: function onComplete() {
+            var _this = this;
+
             if (this.check_logged_in()) {
+                this.isLoading = true;
                 this.send_register_request(this.form, function (response) {
-                    if (response.success) location.href = "/regSuccessfull";
+                    if (response.success) {
+                        //location.href = response.redirect;
+                        var anchorTag = document.createElement("a");
+                        anchorTag.setAttribute('href', response.redirect);
+                        anchorTag.setAttribute('id', 'sign-link');
+                        document.body.appendChild(anchorTag);
+                        anchorTag.click();
+                    }
+                    _this.isLoading = false;
                 });
             } else {
                 this.$cookies.set('register_data', this.form);
@@ -78884,7 +78910,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_8_v_slim_dialog___default.a);
         },
         send_register_request: function send_register_request(form_values, callback) {
             axios.post('/register_sale', form_values).then(function (response) {
-                if (response.data.success) callback({ success: true });else callback({ success: false });
+                callback(response.data);
             });
             this.$cookies.set('register_data', null);
         },
@@ -95226,6 +95252,15 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("loading", {
+        attrs: { active: _vm.isLoading, "is-full-page": _vm.fullPage },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
       _vm.showQuestionnaire == true
         ? _c("Questionnaire", {
             on: { questionnaireFinishedHandler: _vm.onQuestionnaireFinished }

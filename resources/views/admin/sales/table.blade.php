@@ -79,6 +79,7 @@
             <td>
                 {!! Form::open(['route' => ['admin.sales.destroy', $sale->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
+                    <a href="{!! '/download_document?sale_id='.$sale->id; !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-download"></i></a>
                     <a href="{!! route('admin.sales.show', [$sale->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
                     <a href="{!! route('admin.sales.edit', [$sale->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
                     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Sei sicuro?')"]) !!}

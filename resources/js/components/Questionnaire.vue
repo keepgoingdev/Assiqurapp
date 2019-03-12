@@ -229,7 +229,7 @@
 
     export default {
     components: {
-            Loading
+        Loading
     },
     data: ()=>{
         return {
