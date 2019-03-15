@@ -179,6 +179,9 @@ class RegisterSaleController extends Controller
      */
     public function esign_test(Request $request)
     {
+        echo "<pre>";
+        var_dump(self::get_client_location());
+        return;
         $SspFileId = self::namirialUploadTemporarySspFile_v1('pdf_tmp/test.pdf');
 
         $preTasks = self::namirialGetPreparedTasks($SspFileId);
@@ -583,7 +586,7 @@ class RegisterSaleController extends Controller
                 $pdf->SetFontSize(5);
                 $current_location = self::get_client_location();
 
-                $date_location_str = date("d/m/Y") . '  ' . $current_location['city'] . ' ' . self::countryCodeToCountry($current_location['country']);
+                $date_location_str = date("d/m/Y") . '  ' . $current_location['city'] . ' ' . $current_location['country'];
                 //Output Current Date
                 $pdf->SetXY(30, 73.2);
                 $pdf->Write(5, $date_location_str);
@@ -623,7 +626,7 @@ class RegisterSaleController extends Controller
 
         if($ipaddress == '127.0.0.1')
             $ipaddress = '185.57.29.193';
-        $json  = file_get_contents("http://ipinfo.io/$ipaddress/geo");
+        $json  = file_get_contents("http://ip-api.com/json/$ipaddress?lang=it");
         $json  =  json_decode($json ,true);
 
         return $json;

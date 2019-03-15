@@ -95448,7 +95448,7 @@ var render = function() {
                       { staticClass: "age-wrapper" },
                       [
                         _c("NumberInputSpinner", {
-                          attrs: { min: 1, max: 100 },
+                          attrs: { min: -1, max: 100 },
                           model: {
                             value: _vm.form.age,
                             callback: function($$v) {
