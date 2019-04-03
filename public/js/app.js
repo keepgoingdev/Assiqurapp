@@ -90973,6 +90973,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Import component
 
@@ -91039,10 +91051,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 idd_paid_up_condition_after_expiration: false,
 
                 //Qual è il livello di tolleranza al rischio?
-                idd_risk_tolerance_media_sr13_sr14: false,
+                idd_risk_tolerance_media_sr13_sr14: 'Bassa',
 
                 //Qual è il livello di conoscenza delle dinamiche del mercato finanziario assicurativo?
-                idd_insurance_knowledge_level_base: false,
+                idd_insurance_knowledge_level_base: 'Bassa',
 
                 //Preferiresti un accantonamento
                 idd_subscription_type: 'annual',
@@ -92173,9 +92185,9 @@ var render = function() {
                     { staticClass: "md-layout-item" },
                     [
                       _c(
-                        "md-checkbox",
+                        "md-radio",
                         {
-                          staticClass: "md-primary",
+                          attrs: { value: "Bassa" },
                           model: {
                             value:
                               _vm.question_form
@@ -92191,7 +92203,65 @@ var render = function() {
                               "question_form.idd_risk_tolerance_media_sr13_sr14"
                           }
                         },
-                        [_vm._v("Media (SR13 - SR14)")]
+                        [_vm._v("Bassa")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "md-layout-item" },
+                    [
+                      _c(
+                        "md-radio",
+                        {
+                          attrs: { value: "Media" },
+                          model: {
+                            value:
+                              _vm.question_form
+                                .idd_risk_tolerance_media_sr13_sr14,
+                            callback: function($$v) {
+                              _vm.$set(
+                                _vm.question_form,
+                                "idd_risk_tolerance_media_sr13_sr14",
+                                $$v
+                              )
+                            },
+                            expression:
+                              "question_form.idd_risk_tolerance_media_sr13_sr14"
+                          }
+                        },
+                        [_vm._v("Media")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "md-layout-item" },
+                    [
+                      _c(
+                        "md-radio",
+                        {
+                          attrs: { value: "Alta" },
+                          model: {
+                            value:
+                              _vm.question_form
+                                .idd_risk_tolerance_media_sr13_sr14,
+                            callback: function($$v) {
+                              _vm.$set(
+                                _vm.question_form,
+                                "idd_risk_tolerance_media_sr13_sr14",
+                                $$v
+                              )
+                            },
+                            expression:
+                              "question_form.idd_risk_tolerance_media_sr13_sr14"
+                          }
+                        },
+                        [_vm._v("Alta")]
                       )
                     ],
                     1
@@ -92210,9 +92280,9 @@ var render = function() {
                     { staticClass: "md-layout-item" },
                     [
                       _c(
-                        "md-checkbox",
+                        "md-radio",
                         {
-                          staticClass: "md-primary",
+                          attrs: { value: "Bassa" },
                           model: {
                             value:
                               _vm.question_form
@@ -92228,7 +92298,65 @@ var render = function() {
                               "question_form.idd_insurance_knowledge_level_base"
                           }
                         },
-                        [_vm._v("Base")]
+                        [_vm._v("Bassa")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "md-layout-item" },
+                    [
+                      _c(
+                        "md-radio",
+                        {
+                          attrs: { value: "Media" },
+                          model: {
+                            value:
+                              _vm.question_form
+                                .idd_insurance_knowledge_level_base,
+                            callback: function($$v) {
+                              _vm.$set(
+                                _vm.question_form,
+                                "idd_insurance_knowledge_level_base",
+                                $$v
+                              )
+                            },
+                            expression:
+                              "question_form.idd_insurance_knowledge_level_base"
+                          }
+                        },
+                        [_vm._v("Media")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "md-layout-item" },
+                    [
+                      _c(
+                        "md-radio",
+                        {
+                          attrs: { value: "Alta" },
+                          model: {
+                            value:
+                              _vm.question_form
+                                .idd_insurance_knowledge_level_base,
+                            callback: function($$v) {
+                              _vm.$set(
+                                _vm.question_form,
+                                "idd_insurance_knowledge_level_base",
+                                $$v
+                              )
+                            },
+                            expression:
+                              "question_form.idd_insurance_knowledge_level_base"
+                          }
+                        },
+                        [_vm._v("Alta")]
                       )
                     ],
                     1

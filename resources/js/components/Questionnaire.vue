@@ -161,7 +161,13 @@
                     <md-subheader class = "mt-4">Qual è il livello di tolleranza al rischio?</md-subheader>
                     <div class="md-layout md-gutter ml-4">
                         <div class="md-layout-item">
-                            <md-checkbox v-model="question_form.idd_risk_tolerance_media_sr13_sr14" class="md-primary">Media (SR13 - SR14)</md-checkbox>
+                            <md-radio v-model = "question_form.idd_risk_tolerance_media_sr13_sr14" value="Bassa">Bassa</md-radio>
+                        </div>
+                        <div class="md-layout-item">
+                            <md-radio v-model = "question_form.idd_risk_tolerance_media_sr13_sr14" value="Media">Media</md-radio>
+                        </div>
+                        <div class="md-layout-item">
+                            <md-radio v-model = "question_form.idd_risk_tolerance_media_sr13_sr14" value="Alta">Alta</md-radio>
                         </div>
                     </div>
 
@@ -169,7 +175,13 @@
                     <md-subheader class = "mt-4">Qual è il livello di conoscenza delle dinamiche del mercato finanziario assicurativo?</md-subheader>
                     <div class="md-layout md-gutter ml-4">
                         <div class="md-layout-item">
-                            <md-checkbox v-model="question_form.idd_insurance_knowledge_level_base" class="md-primary">Base</md-checkbox>
+                            <md-radio v-model = "question_form.idd_insurance_knowledge_level_base" value="Bassa">Bassa</md-radio>
+                        </div>
+                        <div class="md-layout-item">
+                            <md-radio v-model = "question_form.idd_insurance_knowledge_level_base" value="Media">Media</md-radio>
+                        </div>
+                        <div class="md-layout-item">
+                            <md-radio v-model = "question_form.idd_insurance_knowledge_level_base" value="Alta">Alta</md-radio>
                         </div>
                     </div>
 
@@ -287,10 +299,10 @@
                 idd_paid_up_condition_after_expiration  : false,
 
                 //Qual è il livello di tolleranza al rischio?
-                idd_risk_tolerance_media_sr13_sr14      : false,
+                idd_risk_tolerance_media_sr13_sr14      : 'Bassa',
 
                 //Qual è il livello di conoscenza delle dinamiche del mercato finanziario assicurativo?
-                idd_insurance_knowledge_level_base      : false,
+                idd_insurance_knowledge_level_base      : 'Bassa',
 
                 //Preferiresti un accantonamento
                 idd_subscription_type                   : 'annual',

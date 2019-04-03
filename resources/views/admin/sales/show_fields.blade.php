@@ -498,7 +498,7 @@
         <div class = "col-md-3">
             <div class="form-group">
                 {!! Form::label('', 'Media (SR13 - SR14):') !!}
-                <p>{!! $sale->idd_risk_tolerance_media_sr13_sr14 ? 'yes' : 'no' !!}</p>
+                <p>{!! $sale->idd_risk_tolerance_media_sr13_sr14 !!}</p>
             </div>
         </div>
     </div>
@@ -507,7 +507,7 @@
         <h5 class = "field_question">Qual è il livello di conoscenza delle dinamiche del mercato finanziario assicurativo?</h5>
         <div class = "col-md-3">
             <div class="form-group">
-                <p>{!! $sale->idd_insurance_knowledge_level_base ? 'Base' : '' !!}</p>
+                <p>{!! $sale->idd_insurance_knowledge_level_base !!}</p>
             </div>
         </div>
     </div>

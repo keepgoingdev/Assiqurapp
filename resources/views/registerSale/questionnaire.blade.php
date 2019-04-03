@@ -186,9 +186,7 @@
                         <strong>Qual è il livello di tolleranza al rischio?</strong>
                     </div>
                     <div class = "answer">
-                        @if($idd_risk_tolerance_media_sr13_sr14 == true)
-                            <div>Media (SR13 - SR14)</div>
-                        @endif
+                        <div>{{ $idd_risk_tolerance_media_sr13_sr14 }}</div>
                     </div>
                 </div>
 
@@ -197,9 +195,7 @@
                         <strong>Qual è il livello di conoscenza delle dinamiche del mercato finanziario assicurativo?</strong>
                     </div>
                     <div class = "answer">
-                        @if($idd_insurance_knowledge_level_base == true)
-                            <div>Base</div>
-                        @endif
+                        <div>{{ $idd_insurance_knowledge_level_base }}</div>
                     </div>
                 </div>
 
