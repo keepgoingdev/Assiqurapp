@@ -153,7 +153,7 @@
                     <md-subheader class = "mt-4">Quali sono le aspettative rispetto al capitale versato?</md-subheader>
                     <div class="md-layout md-gutter ml-4">
                         <div class="md-layout-item">
-                            <md-checkbox v-model="question_form.idd_paid_up_condition_after_expiration" class="md-primary">Controversie legali</md-checkbox>
+                            <md-checkbox v-model="question_form.idd_paid_up_condition_after_expiration" class="md-primary">Garanzia del capitale alla scadenza del contratto</md-checkbox>
                         </div>
                     </div>
 

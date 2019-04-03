@@ -92152,7 +92152,11 @@ var render = function() {
                               "question_form.idd_paid_up_condition_after_expiration"
                           }
                         },
-                        [_vm._v("Controversie legali")]
+                        [
+                          _vm._v(
+                            "Garanzia del capitale alla scadenza del contratto"
+                          )
+                        ]
                       )
                     ],
                     1
