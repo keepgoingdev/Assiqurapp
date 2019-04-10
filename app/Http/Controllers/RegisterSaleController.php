@@ -373,9 +373,9 @@ class RegisterSaleController extends Controller
         }
         curl_close($curl);
 
-        //echo "<pre>";
-        //var_dump($response);
-        //exit;
+        echo "<pre>";
+        var_dump($response);
+        exit;
 
         return $response->EnvelopeId;
     }
