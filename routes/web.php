@@ -3,7 +3,7 @@ Auth::routes();
 
 
 
-Route::get('/log', ['as'=> 'log', 'uses' => 'RegisterSaleController@event_log']);
+Route::get( '/log', ['as'=> 'log', 'uses' => 'RegisterSaleController@event_log'] );
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', 'RegisterSaleController@index');
