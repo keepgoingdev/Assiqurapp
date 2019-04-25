@@ -7,7 +7,6 @@
     <div class = "thankpage-text">Hai firmato il contratto con successo!</div>
     <div class = "thankpage-link-to-new" ><a href = "{{ url('/') }}" style = "text-decoration: none !important;">Nuova registrazione</a></div>
 </div>
-
 @endsection
 
 @section('scripts')
