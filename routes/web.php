@@ -15,7 +15,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/reg_successfull', ['as'=> 'reg_successfull', 'uses' => 'RegisterSaleController@reg_successfull']);
     Route::get('/download_document', ['as'=> 'download_document', 'uses' => 'RegisterSaleController@download_document']);
 
+
     Route::get('/download_finished_document_background', ['as'=> 'download_finished_document_background', 'uses' => 'RegisterSaleController@download_finished_document_background']);
+
 
     Route::get('admin/users/profile', ['as'=> 'admin.users.profile', 'uses' => 'Admin\UserController@profile']);
     Route::patch('admin/users/update_profile', ['as'=> 'admin.users.update_profile', 'uses' => 'Admin\UserController@update_profile']);
